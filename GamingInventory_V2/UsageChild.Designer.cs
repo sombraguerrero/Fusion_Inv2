@@ -28,12 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UsageChild));
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.printDialog1 = new System.Windows.Forms.PrintDialog();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
+            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.usageDS = new System.Data.DataSet();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.usageDS)).BeginInit();
             this.SuspendLayout();
             // 
             // dataGridView1
@@ -71,6 +76,10 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
+            // usageDS
+            // 
+            this.usageDS.DataSetName = "usageDS1";
+            // 
             // UsageChild
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -83,6 +92,8 @@
             this.Name = "UsageChild";
             this.Text = "Usage Report";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.usageDS)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -93,5 +104,7 @@
         private System.Windows.Forms.PrintDialog printDialog1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.BindingSource bindingSource1;
+        private System.Data.DataSet usageDS;
     }
 }

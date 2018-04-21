@@ -7,8 +7,6 @@ namespace GamingInventory_V2
 {
     public partial class UsageChild : Form
     {
-        UsageTable DurationTable;
-
         private void showUsageSpreadSheet()
         {
             var usageExcelApp = new Excel.Application();
@@ -25,17 +23,17 @@ namespace GamingInventory_V2
             usageSheet.Cells[1, "H"] = "Direction";
             usageSheet.Cells[1, "I"] = "Duration";
             int sheetRowPosition = 2;
-            foreach (DataRow r in DurationTable.Rows)
+            foreach (DataRow r in usageDS.Tables[0].Rows)
             {
-                usageSheet.Cells[sheetRowPosition, "A"] = r["OwnerName"];
+                usageSheet.Cells[sheetRowPosition, "A"] = r["Owner"];
                 usageSheet.Cells[sheetRowPosition, "B"] = r["ItemID"];
-                usageSheet.Cells[sheetRowPosition, "C"] = r["ItemType"];
-                usageSheet.Cells[sheetRowPosition, "D"] = r["ItemPlatform"];
-                usageSheet.Cells[sheetRowPosition, "E"] = r["ItemSerial_Title"];
-                usageSheet.Cells[sheetRowPosition, "F"] = r["ItemDescription"];
+                usageSheet.Cells[sheetRowPosition, "C"] = r["Type"];
+                usageSheet.Cells[sheetRowPosition, "D"] = r["Platform"];
+                usageSheet.Cells[sheetRowPosition, "E"] = r["Serial"];
+                usageSheet.Cells[sheetRowPosition, "F"] = r["Description"];
                 usageSheet.Cells[sheetRowPosition, "G"] = r["Check"];
                 usageSheet.Cells[sheetRowPosition, "H"] = r["Direction"];
-                usageSheet.Cells[sheetRowPosition, "I"] = r["Duration(mins)"];
+                usageSheet.Cells[sheetRowPosition, "I"] = r["Duration"];
 
                 sheetRowPosition++;
             }
@@ -56,15 +54,11 @@ namespace GamingInventory_V2
         public UsageChild()
         {
             InitializeComponent();
-            DurationTable = new UsageTable();
+            dataGridView1.DataSource = bindingSource1;
             MySqlCommand DurationCmd = new MySqlCommand("select checkinginout.`Check`, checkinginout.Direction, checkinginout.Duration, checkinginout.ItemID, items.`Owner`, items.`Type`, items.Platform, items.`Serial`, items.Description from checkinginout left join items on items.ID=checkinginout.itemID order by Duration desc;", Form1.MasterConnection);
-            MySqlDataReader DurationReader = DurationCmd.ExecuteReader();
-            while (DurationReader.Read())
-            {
-                DurationTable.MakeRow(DurationReader.GetDecimal("ItemID"), DurationReader.GetString("Owner"), DurationReader.GetString("Platform"), DurationReader.GetString("Serial"), DurationReader.GetString("Description"), DurationReader.GetString("Type"), DurationReader.GetString("Direction"), DurationReader.GetString("Check"), DurationReader.GetInt32("Duration"));
-            }
-            DurationReader.Close();
-            dataGridView1.DataSource = DurationTable;
+            MySqlDataAdapter DurationReader = new MySqlDataAdapter(DurationCmd);
+            DurationReader.Fill(usageDS);
+            bindingSource1.DataSource = usageDS.Tables[0];
         }
 
         private void button1_Click(object sender, EventArgs e)

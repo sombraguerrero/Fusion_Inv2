@@ -2,16 +2,23 @@
 using System.Windows.Forms;
 using GamingInventory;
 using MySql.Data.MySqlClient;
+using System.Data;
+using System.Text;
 
 
 namespace GamingInventory_V2
 {
     public partial class SearchItems : Form
     {
+        bool RaiseValueChanged = true;
+        BindingSource binding;
 
         public SearchItems()
         {
             InitializeComponent();
+
+            binding = new BindingSource();
+            dataGridView1.DataSource = binding;
             HScroll = true;
             VScroll = true;
             
@@ -55,11 +62,11 @@ namespace GamingInventory_V2
 
         private void itemSearch()
         {
+            searchDS.Clear();
             string query;
             MySqlCommand QueryItems = new MySqlCommand();
-            MySqlDataReader ReadSearchedItems = null;
+            MySqlDataAdapter mySqlDataAdapter = new MySqlDataAdapter();
             ItemResult ItemToSelect = new ItemResult();
-            ResultPage RPage = new ResultPage(contextMenuStrip1);
 
             GetValidFields(ItemToSelect);
             query = ItemToSelect.BuildSelectQuery(QueryItems, true, IDSpinner.Enabled, OwnerCombo.Enabled, PlatformCombo.Enabled, SerialText.Enabled, TypeCombo.Enabled, DescriptionText.Enabled, archiveCheck.Checked);
@@ -67,16 +74,28 @@ namespace GamingInventory_V2
             {
                 QueryItems.CommandText = query;
                 QueryItems.Connection = Form1.MasterConnection;
-                ReadSearchedItems = QueryItems.ExecuteReader();
-                while (ReadSearchedItems.Read() && ReadSearchedItems != null)
-                {
-                    RPage.Tableau.MakeRowFromtItemResult(new ItemResult(ReadSearchedItems.GetString("Owner"), ReadSearchedItems.GetInt32("ID"), ReadSearchedItems.GetString("Type"), ReadSearchedItems.GetString("Platform"), ReadSearchedItems.GetString("Serial"), ReadSearchedItems.GetString("Description"), ReadSearchedItems.GetString("LastCheckIn"), ReadSearchedItems.GetString("LastCheckout"), ReadSearchedItems.GetBoolean("Archived"), ReadSearchedItems.GetBoolean("Bound")));
-                }
-                ReadSearchedItems.Close();
-                RPage.AllItemsCheckedIn();
-                resultsTabs_ctrl.TabPages.Add(RPage);
-                RPage.initColors();
-                resultsTabs_ctrl.SelectedIndex = resultsTabs_ctrl.TabPages.Count - 1;
+                mySqlDataAdapter.SelectCommand = QueryItems;
+                mySqlDataAdapter.Fill(searchDS);
+                if (searchDS.Tables[0].Columns["CheckedIn"] == null)
+                    searchDS.Tables[0].Columns.Add("CheckedIn", Type.GetType("System.Boolean"));
+                initChecks();
+                binding.DataSource = searchDS.Tables[0];
+                AllItemsCheckedIn();
+                initColors();
+            }
+        }
+
+        private void initChecks()
+        {
+            DateTime cin;
+            DateTime cout;
+            foreach (DataRow item in searchDS.Tables[0].Rows)
+            {
+                //MessageBox.Show(item["LastCheckIn"].ToString());
+                //MessageBox.Show(item["LastCheckOut"].ToString());
+                cin = DateTime.Parse(item["LastCheckIn"].ToString());
+                cout = DateTime.Parse(item["LastCheckOut"].ToString());
+                item["CheckedIn"] = cin > cout;
             }
         }
 
@@ -133,41 +152,9 @@ namespace GamingInventory_V2
                 DescriptionText.Enabled = true;
         }
 
-        private void toolStripTextBox1_TextChanged(object sender, EventArgs e)
-        {
-            TabPage tmp = contextMenuStrip1.SourceControl as TabPage;
-            tmp.Text = toolStripTextBox1.Text;
-        }
-
-        private void toolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            resultsTabs_ctrl.SelectedTab.Dispose();
-        }
-
-        private void toolStripTextBox1_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar.Equals((char)Keys.Enter))
-                contextMenuStrip1.Close();
-        }
-
         private void button1_Click(object sender, EventArgs e)
         {
             Close();
-        }
-
-        private void contextMenuStrip1_Opening(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            contextMenuStrip1.Items[0].Text = "Tab Name Here...";
-        }
-
-        private void toolStripTextBox1_Enter(object sender, EventArgs e)
-        {
-            toolStripTextBox1.Text = string.Empty;
-        }
-
-        private void toolStripTextBox1_Click(object sender, EventArgs e)
-        {
-            toolStripTextBox1.Clear();
         }
 
         private void SerialText_KeyPress(object sender, KeyPressEventArgs e)
@@ -186,6 +173,168 @@ namespace GamingInventory_V2
         {
             if (e.KeyChar == (char)Keys.Enter)
                 itemSearch();
+        }
+
+        public void initColors()
+        {
+            DataGridViewCheckBoxCell cc;
+            foreach (DataGridViewRow dgr in dataGridView1.Rows)
+            {
+                cc = dgr.Cells["CheckedIn"] as DataGridViewCheckBoxCell;
+                if (Convert.ToBoolean(cc.Value))
+                    dgr.DefaultCellStyle.BackColor = System.Drawing.Color.LightGreen;
+                else
+                    dgr.DefaultCellStyle.BackColor = System.Drawing.Color.LightPink;
+            }
+        }
+
+        public void AllItemsCheckedIn()
+        {
+            foreach (DataRow r in searchDS.Tables[0].Rows)
+            {
+                bool tmp = Convert.ToBoolean(r["CheckedIn"]);
+                if (!tmp)
+                    SelectAllBox.Checked = false;
+                return;
+            }
+        }
+
+        private string BuildSelectAllUpdateQuery(bool checkIn)
+        {
+            StringBuilder ListBuilder = new StringBuilder();
+            for (int i = 0; i < searchDS.Tables[0].Rows.Count - 1; i++)
+            {
+                ListBuilder.AppendFormat("{0},", searchDS.Tables[0].Rows[i]["ID"].ToString());
+            }
+            ListBuilder.Append(searchDS.Tables[0].Rows[searchDS.Tables[0].Rows.Count - 1]["ID"].ToString());
+            StringBuilder selectAllBuilder = new StringBuilder("UPDATE `GAMINGINV`.`ITEMS` SET ");
+            if (checkIn)
+            {
+                selectAllBuilder.AppendFormat("LastCheckIn = now() WHERE `ID` IN ({0});", ListBuilder.ToString());
+            }
+            else
+            {
+                selectAllBuilder.AppendFormat("LastCheckOut = now() WHERE `ID` IN ({0});", ListBuilder.ToString());
+            }
+            return selectAllBuilder.ToString();
+        }
+
+        private string BuildSelectAllInserteQuery(bool checkIn)
+        {
+            StringBuilder selectAllBuilder = new StringBuilder("INSERT INTO `GAMINGINV`.`CHECKINGINOUT` (`ITEMID`, `DIRECTION`, `CHECK`, `DURATION`) VALUES ");
+            TimeSpan CheckDuration = new TimeSpan();
+
+            if (checkIn)
+            {
+                for (int i = 0; i < searchDS.Tables[0].Rows.Count - 1; i++)
+                {
+                    CheckDuration = DateTime.Now - DateTime.Parse(searchDS.Tables[0].Rows[i]["LastCheckOut"].ToString());
+                    selectAllBuilder.AppendFormat("({0}, \'IN\', now(), {1}), ", searchDS.Tables[0].Rows[i]["ID"], CheckDuration.TotalMinutes);
+                }
+                CheckDuration = DateTime.Now - DateTime.Parse(searchDS.Tables[0].Rows[searchDS.Tables[0].Rows.Count - 1]["LastCheckOut"].ToString());
+                selectAllBuilder.AppendFormat("({0}, \'IN\', now(), {1});", searchDS.Tables[0].Rows[searchDS.Tables[0].Rows.Count - 1]["ID"], CheckDuration.TotalMinutes);
+            }
+            else
+            {
+                for (int i = 0; i < searchDS.Tables[0].Rows.Count - 1; i++)
+                {
+                    selectAllBuilder.AppendFormat("({0}, \'OUT\', now(), 0), ", searchDS.Tables[0].Rows[i]["ID"]);
+                }
+                selectAllBuilder.AppendFormat("({0}, \'OUT\', now(), 0);", searchDS.Tables[0].Rows[searchDS.Tables[0].Rows.Count - 1]["ID"]);
+            }
+            return selectAllBuilder.ToString();
+        }
+
+        private void SelectAllBox_Click(object sender, EventArgs e)
+        {
+            RaiseValueChanged = false;
+            DataGridViewCheckBoxCell cc;
+            MySqlCommand UpsertAllCmd = new MySqlCommand();
+            UpsertAllCmd.Connection = Form1.MasterConnection;
+
+            if (SelectAllBox.Checked)
+            {
+                foreach (DataGridViewRow dgr in dataGridView1.Rows)
+                {
+                    cc = dgr.Cells["CheckedIn"] as DataGridViewCheckBoxCell;
+                    cc.Value = true;
+                    dgr.DefaultCellStyle.BackColor = System.Drawing.Color.LightGreen;
+                    (dgr.Cells["LastCheckIn"] as DataGridViewTextBoxCell).Value = DateTime.Now.ToString();
+                }
+                UpsertAllCmd.CommandText = BuildSelectAllUpdateQuery(true);
+                UpsertAllCmd.ExecuteNonQuery();
+
+                //Write checkin and checkout records only when con is live
+                if (Form1.LiveCon)
+                {
+                    UpsertAllCmd.CommandText = BuildSelectAllInserteQuery(true);
+                    UpsertAllCmd.ExecuteNonQuery();
+                }
+            }
+            else
+            {
+                foreach (DataGridViewRow dgr in dataGridView1.Rows)
+                {
+                    cc = dgr.Cells["CheckedIn"] as DataGridViewCheckBoxCell;
+                    cc.Value = false;
+                    dgr.DefaultCellStyle.BackColor = System.Drawing.Color.LightPink;
+                    (dgr.Cells["LastCheckOut"] as DataGridViewTextBoxCell).Value = DateTime.Now.ToString();
+                }
+                UpsertAllCmd.CommandText = BuildSelectAllUpdateQuery(false);
+                UpsertAllCmd.ExecuteNonQuery();
+
+                //Write checkin and checkout records only when con is live
+                if (Form1.LiveCon)
+                {
+                    UpsertAllCmd.CommandText = BuildSelectAllInserteQuery(false);
+                    UpsertAllCmd.ExecuteNonQuery();
+                }
+            }
+            RaiseValueChanged = true;
+        }
+
+        private ItemResult GenerateItemResult(int r)
+        {
+            //ItemChanged = new ItemResult(r["OwnerName"], r["ItemID"], r["ItemType"], r["ItemPlatform"], r["ItemSerial"], r["ItemDescription"], r["LastCheckIn"], r["LastCheckOut"], false, r["isCheckedIn"]);
+            DataRow row = searchDS.Tables[0].Rows[r];
+            return new ItemResult(row["Owner"].ToString(), decimal.Parse(row["ID"].ToString()), row["Type"].ToString(), row["Platform"].ToString(), row["Serial"].ToString(), row["Description"].ToString(), row["LastCheckIn"].ToString(), row["LastCheckOut"].ToString(), false, bool.Parse(row["CheckedIn"].ToString()));
+        }
+
+        private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            if (RaiseValueChanged)
+            {
+                DataGridViewCheckBoxCell cc;
+                ItemResult ItemChanged;
+
+                if (dataGridView1.Columns[e.ColumnIndex].Name.Equals("CheckedIn"))
+                {
+                    cc = dataGridView1[e.ColumnIndex, e.RowIndex] as DataGridViewCheckBoxCell;
+                    ItemChanged = GenerateItemResult(e.RowIndex);
+                    if ((bool)cc.Value)
+                    {
+                        ItemChanged.LastCheckInValue = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                        (dataGridView1["LastCheckIn", e.RowIndex] as DataGridViewTextBoxCell).Value = ItemChanged.LastCheckInValue;
+                        ItemChanged.UpsertCheckInOut(Form1.MasterConnection, true, Form1.LiveCon);
+                        dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = System.Drawing.Color.LightGreen;
+                        //Cursor.Current = Cursors.WaitCursor;
+                    }
+                    else
+                    {
+                        ItemChanged.LastCheckOutValue = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                        (dataGridView1["LastCheckOut", e.RowIndex] as DataGridViewTextBoxCell).Value = ItemChanged.LastCheckOutValue;
+                        ItemChanged.UpsertCheckInOut(Form1.MasterConnection, false, Form1.LiveCon);
+                        dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = System.Drawing.Color.LightPink;
+                        //Cursor.Current = Cursors.WaitCursor;
+                    }
+                }
+            }
+        }
+
+        private void dataGridView1_CurrentCellDirtyStateChanged(object sender, EventArgs e)
+        {
+            if (dataGridView1.IsCurrentCellDirty)
+                dataGridView1.CommitEdit(DataGridViewDataErrorContexts.Commit);
         }
     }
 }

@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SearchItems));
             this.findItems_btn = new System.Windows.Forms.Button();
             this.DescriptionCheck = new System.Windows.Forms.CheckBox();
@@ -43,21 +42,21 @@
             this.IDCheck = new System.Windows.Forms.CheckBox();
             this.OwnerCombo = new System.Windows.Forms.ComboBox();
             this.OwnerCheck = new System.Windows.Forms.CheckBox();
-            this.resultsTabs_ctrl = new System.Windows.Forms.TabControl();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.toolStripTextBox1 = new System.Windows.Forms.ToolStripTextBox();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.button1 = new System.Windows.Forms.Button();
             this.archiveCheck = new System.Windows.Forms.CheckBox();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.searchDS = new System.Data.DataSet();
+            this.SelectAllBox = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.IDSpinner)).BeginInit();
-            this.contextMenuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.searchDS)).BeginInit();
             this.SuspendLayout();
             // 
             // findItems_btn
             // 
             this.findItems_btn.AutoSize = true;
             this.findItems_btn.Font = new System.Drawing.Font("Arial Black", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.findItems_btn.Location = new System.Drawing.Point(744, 356);
+            this.findItems_btn.Location = new System.Drawing.Point(844, 356);
             this.findItems_btn.Name = "findItems_btn";
             this.findItems_btn.Size = new System.Drawing.Size(187, 42);
             this.findItems_btn.TabIndex = 25;
@@ -205,43 +204,10 @@
             this.OwnerCheck.UseVisualStyleBackColor = true;
             this.OwnerCheck.CheckedChanged += new System.EventHandler(this.OwnerCheck_CheckedChanged);
             // 
-            // resultsTabs_ctrl
-            // 
-            this.resultsTabs_ctrl.Location = new System.Drawing.Point(4, 59);
-            this.resultsTabs_ctrl.Name = "resultsTabs_ctrl";
-            this.resultsTabs_ctrl.SelectedIndex = 0;
-            this.resultsTabs_ctrl.Size = new System.Drawing.Size(1280, 288);
-            this.resultsTabs_ctrl.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
-            this.resultsTabs_ctrl.TabIndex = 26;
-            // 
-            // contextMenuStrip1
-            // 
-            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripTextBox1,
-            this.toolStripMenuItem1});
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(161, 51);
-            this.contextMenuStrip1.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip1_Opening);
-            // 
-            // toolStripTextBox1
-            // 
-            this.toolStripTextBox1.Name = "toolStripTextBox1";
-            this.toolStripTextBox1.Size = new System.Drawing.Size(100, 23);
-            this.toolStripTextBox1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.toolStripTextBox1_KeyPress);
-            this.toolStripTextBox1.Click += new System.EventHandler(this.toolStripTextBox1_Click);
-            this.toolStripTextBox1.TextChanged += new System.EventHandler(this.toolStripTextBox1_TextChanged);
-            // 
-            // toolStripMenuItem1
-            // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(160, 22);
-            this.toolStripMenuItem1.Text = "Close Tab";
-            this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
-            // 
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Arial Black", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(937, 356);
+            this.button1.Location = new System.Drawing.Point(1037, 356);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(184, 42);
             this.button1.TabIndex = 27;
@@ -259,14 +225,40 @@
             this.archiveCheck.Text = "Include Archived Items";
             this.archiveCheck.UseVisualStyleBackColor = true;
             // 
+            // dataGridView1
+            // 
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(4, 59);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.Size = new System.Drawing.Size(1217, 291);
+            this.dataGridView1.TabIndex = 29;
+            this.dataGridView1.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellValueChanged);
+            this.dataGridView1.CurrentCellDirtyStateChanged += new System.EventHandler(this.dataGridView1_CurrentCellDirtyStateChanged);
+            // 
+            // searchDS
+            // 
+            this.searchDS.DataSetName = "searchDS1";
+            // 
+            // SelectAllBox
+            // 
+            this.SelectAllBox.AutoSize = true;
+            this.SelectAllBox.Location = new System.Drawing.Point(1227, 59);
+            this.SelectAllBox.Name = "SelectAllBox";
+            this.SelectAllBox.Size = new System.Drawing.Size(70, 17);
+            this.SelectAllBox.TabIndex = 30;
+            this.SelectAllBox.Text = "Select All";
+            this.SelectAllBox.UseVisualStyleBackColor = true;
+            this.SelectAllBox.Click += new System.EventHandler(this.SelectAllBox_Click);
+            // 
             // SearchItems
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1309, 410);
+            this.Controls.Add(this.SelectAllBox);
+            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.archiveCheck);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.resultsTabs_ctrl);
             this.Controls.Add(this.findItems_btn);
             this.Controls.Add(this.DescriptionCheck);
             this.Controls.Add(this.DescriptionText);
@@ -284,8 +276,8 @@
             this.Name = "SearchItems";
             this.Text = "Search Items";
             ((System.ComponentModel.ISupportInitialize)(this.IDSpinner)).EndInit();
-            this.contextMenuStrip1.ResumeLayout(false);
-            this.contextMenuStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.searchDS)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -306,11 +298,10 @@
         private System.Windows.Forms.CheckBox IDCheck;
         private System.Windows.Forms.ComboBox OwnerCombo;
         private System.Windows.Forms.CheckBox OwnerCheck;
-        private System.Windows.Forms.TabControl resultsTabs_ctrl;
-        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
-        private System.Windows.Forms.ToolStripTextBox toolStripTextBox1;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.CheckBox archiveCheck;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Data.DataSet searchDS;
+        private System.Windows.Forms.CheckBox SelectAllBox;
     }
 }

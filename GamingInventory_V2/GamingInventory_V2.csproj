@@ -51,14 +51,17 @@
     <ApplicationIcon>ad.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Google.Protobuf, Version=3.5.1.0, Culture=neutral, PublicKeyToken=a7d26565bac4d604, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Protobuf.3.5.1\lib\net45\Google.Protobuf.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <EmbedInteropTypes>True</EmbedInteropTypes>
       <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1000\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.VisualBasic" />
-    <Reference Include="MySql.Data, Version=6.10.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
-      <HintPath>..\packages\MySql.Data.6.10.5\lib\net452\MySql.Data.dll</HintPath>
+    <Reference Include="MySql.Data, Version=8.0.11.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\packages\MySql.Data.8.0.11\lib\net452\MySql.Data.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel" />
@@ -105,28 +108,21 @@
     <Compile Include="GamesByPlatform.Designer.cs">
       <DependentUpon>GamesByPlatform.cs</DependentUpon>
     </Compile>
+    <Compile Include="ItemResult.cs" />
     <Compile Include="ItemsAudit.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ItemsAudit.Designer.cs">
       <DependentUpon>ItemsAudit.cs</DependentUpon>
     </Compile>
+    <Compile Include="OwnerResult.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ResultPage.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="SearchTable.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="UsageChild.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="UsageChild.Designer.cs">
       <DependentUpon>UsageChild.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UsageTable.cs">
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="SearchItems.cs">
       <SubType>Form</SubType>
@@ -212,17 +208,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ad.ico" />
-    <Content Include="docs\MySqlCommand.xml" />
-    <Content Include="docs\MySqlCommandBuilder.xml" />
-    <Content Include="docs\MySqlConnection.xml" />
-    <Content Include="docs\MySqlConnectionStringBuilder.xml" />
-    <Content Include="docs\MySqlDataAdapter.xml" />
-    <Content Include="docs\MySqlDataReader.xml" />
-    <Content Include="docs\MySqlException.xml" />
-    <Content Include="docs\MySqlHelper.xml" />
-    <Content Include="docs\MySqlParameter.xml" />
-    <Content Include="docs\MySqlParameterCollection.xml" />
-    <Content Include="docs\MySqlTransaction.xml" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">
@@ -235,12 +220,6 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\GamingInventory\GamingInventory.csproj">
-      <Project>{cbbbdf27-a9ce-472d-bc8b-2a4d9f975808}</Project>
-      <Name>GamingInventory</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="Microsoft.Office.Core">

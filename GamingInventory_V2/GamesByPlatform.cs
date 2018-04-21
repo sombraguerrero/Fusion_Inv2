@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
-using GamingInventory;
 using MySql.Data.MySqlClient;
 using Excel = Microsoft.Office.Interop.Excel;
+using System.Data;
 
 namespace GamingInventory_V2
 {
@@ -19,11 +19,11 @@ namespace GamingInventory_V2
             gamesSheet.Cells[1, "B"] = "Serial/Title";
             gamesSheet.Cells[1, "C"] = "Description";
             int sheetRowPosition = 2;
-            foreach (ItemResult result in itemResultBindingSource)
+            foreach (DataRow result in gamesDS.Tables[0].Rows)
             {
-                gamesSheet.Cells[sheetRowPosition, "A"] = result.PlatformValue;
-                gamesSheet.Cells[sheetRowPosition, "B"] = result.SerialValue;
-                gamesSheet.Cells[sheetRowPosition, "C"] = result.DescriptionValue;
+                gamesSheet.Cells[sheetRowPosition, "A"] = result["Platform"];
+                gamesSheet.Cells[sheetRowPosition, "B"] = result["Serial"];
+                gamesSheet.Cells[sheetRowPosition, "C"] = result["Description"];
                 sheetRowPosition++;
             }
             gamesSheet.Columns[1].AutoFit();
@@ -37,14 +37,11 @@ namespace GamingInventory_V2
         public GamesByPlatform()
         {
             InitializeComponent();
-
+            dataGridView1.DataSource = bindingSource1;
             MySqlCommand SelectGamesByPlatformCmd = new MySqlCommand("SELECT `PLATFORM`, `SERIAL`, `DESCRIPTION`, (`LastCheckOut` < `LastCheckIn`) as \'Bound\'  FROM `ITEMS` WHERE `TYPE` = \'GAME\' ORDER BY `PLATFORM`;", Form1.MasterConnection);
-            MySqlDataReader ReadGames = SelectGamesByPlatformCmd.ExecuteReader();
-            while (ReadGames.Read())
-            {
-                itemResultBindingSource.Add(new ItemResult(ReadGames.GetString("Platform"), ReadGames.GetString("Serial"), ReadGames.GetString("Description"), ReadGames.GetBoolean("Bound")));
-            }
-            ReadGames.Close();
+            MySqlDataAdapter ReadGames = new MySqlDataAdapter(SelectGamesByPlatformCmd);
+            ReadGames.Fill(gamesDS);
+            bindingSource1.DataSource = gamesDS.Tables[0];
         }
 
         private void button1_Click(object sender, EventArgs e)

@@ -4,11 +4,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 15.0.26730.15
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GamingInventory_V2", "GamingInventory_V2\GamingInventory_V2.csproj", "{4E846EC9-DB23-453A-96CF-67BE0C4E584C}"
-	ProjectSection(ProjectDependencies) = postProject
-		{CBBBDF27-A9CE-472D-BC8B-2A4D9F975808} = {CBBBDF27-A9CE-472D-BC8B-2A4D9F975808}
-	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GamingInventory", "GamingInventory\GamingInventory.csproj", "{CBBBDF27-A9CE-472D-BC8B-2A4D9F975808}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,10 +15,6 @@ Global
 		{4E846EC9-DB23-453A-96CF-67BE0C4E584C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4E846EC9-DB23-453A-96CF-67BE0C4E584C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4E846EC9-DB23-453A-96CF-67BE0C4E584C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CBBBDF27-A9CE-472D-BC8B-2A4D9F975808}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CBBBDF27-A9CE-472D-BC8B-2A4D9F975808}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CBBBDF27-A9CE-472D-BC8B-2A4D9F975808}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CBBBDF27-A9CE-472D-BC8B-2A4D9F975808}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

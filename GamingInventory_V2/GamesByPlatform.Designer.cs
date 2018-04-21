@@ -31,37 +31,24 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GamesByPlatform));
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.itemResultBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
-            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.bindingCheckValueDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.gamesDS = new System.Data.DataSet();
+            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.itemResultBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gamesDS)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.SuspendLayout();
             // 
             // dataGridView1
             // 
             this.dataGridView1.AllowUserToOrderColumns = true;
-            this.dataGridView1.AutoGenerateColumns = false;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dataGridViewTextBoxColumn1,
-            this.dataGridViewTextBoxColumn2,
-            this.dataGridViewTextBoxColumn3,
-            this.bindingCheckValueDataGridViewCheckBoxColumn});
-            this.dataGridView1.DataSource = this.itemResultBindingSource;
             this.dataGridView1.Location = new System.Drawing.Point(25, 16);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.Size = new System.Drawing.Size(1093, 327);
             this.dataGridView1.TabIndex = 0;
-            // 
-            // itemResultBindingSource
-            // 
-            this.itemResultBindingSource.DataSource = typeof(GamingInventory.ItemResult);
             // 
             // button1
             // 
@@ -85,33 +72,9 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
-            // dataGridViewTextBoxColumn1
+            // gamesDS
             // 
-            this.dataGridViewTextBoxColumn1.DataPropertyName = "PlatformValue";
-            this.dataGridViewTextBoxColumn1.HeaderText = "PlatformValue";
-            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            this.dataGridViewTextBoxColumn1.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn2
-            // 
-            this.dataGridViewTextBoxColumn2.DataPropertyName = "SerialValue";
-            this.dataGridViewTextBoxColumn2.HeaderText = "SerialValue";
-            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            this.dataGridViewTextBoxColumn2.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn3
-            // 
-            this.dataGridViewTextBoxColumn3.DataPropertyName = "DescriptionValue";
-            this.dataGridViewTextBoxColumn3.HeaderText = "DescriptionValue";
-            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            this.dataGridViewTextBoxColumn3.ReadOnly = true;
-            // 
-            // bindingCheckValueDataGridViewCheckBoxColumn
-            // 
-            this.bindingCheckValueDataGridViewCheckBoxColumn.DataPropertyName = "BindingCheckValue";
-            this.bindingCheckValueDataGridViewCheckBoxColumn.HeaderText = "BindingCheckValue";
-            this.bindingCheckValueDataGridViewCheckBoxColumn.Name = "bindingCheckValueDataGridViewCheckBoxColumn";
-            this.bindingCheckValueDataGridViewCheckBoxColumn.ReadOnly = true;
+            this.gamesDS.DataSetName = "gamesDS1";
             // 
             // GamesByPlatform
             // 
@@ -125,7 +88,8 @@
             this.Name = "GamesByPlatform";
             this.Text = "Games By Platform";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.itemResultBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gamesDS)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -133,12 +97,9 @@
         #endregion
 
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.BindingSource itemResultBindingSource;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn bindingCheckValueDataGridViewCheckBoxColumn;
+        private System.Data.DataSet gamesDS;
+        private System.Windows.Forms.BindingSource bindingSource1;
     }
 }
