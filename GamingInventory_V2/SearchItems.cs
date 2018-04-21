@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows.Forms;
-using GamingInventory;
 using MySql.Data.MySqlClient;
 using System.Data;
 using System.Text;

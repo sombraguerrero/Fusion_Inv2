@@ -123,7 +123,7 @@
             // ownerResultBindingSource
             // 
             this.ownerResultBindingSource.AllowNew = false;
-            this.ownerResultBindingSource.DataSource = typeof(GamingInventory.OwnerResult);
+            this.ownerResultBindingSource.DataSource = typeof(GamingInventory_V2.OwnerResult);
             // 
             // button1
             // 

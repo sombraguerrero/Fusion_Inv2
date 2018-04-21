@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
-using GamingInventory;
 using System.Drawing;
 using System.Collections;
 
@@ -164,8 +163,10 @@ namespace GamingInventory_V2
             int PreviousItemIndex = itemResultBindingSource.Position;
             decimal CurrentItemID;
             MySqlCommand CleanUpCmd = new MySqlCommand();
-
+            CleanUpCmd.CommandType = System.Data.CommandType.StoredProcedure;
+            CleanUpCmd.CommandText = @"changeItemOwner";
             CleanUpCmd.Connection = Form1.MasterConnection;
+
             changeOwner = MessageBox.Show("Are you sure you want to change the owner of this item?", "Please confirm!", MessageBoxButtons.YesNo);
             if (changeOwner == DialogResult.Yes)
             {
@@ -174,10 +175,7 @@ namespace GamingInventory_V2
                 CurrentItem.IDValue = CurrentItem.Insert(Form1.MasterConnection); //new value
                 itemResultBindingSource.Add(CurrentItem);
                 itemResultBindingSource.RemoveAt(PreviousItemIndex);
-                CleanUpCmd.CommandText = "DELETE FROM `GAMINGINV`.`ITEMS` WHERE ID = @IDParam";
                 CleanUpCmd.Parameters.AddWithValue("@IDParam", CurrentItemID);
-                CleanUpCmd.ExecuteNonQuery();
-                CleanUpCmd.CommandText = "UPDATE `GAMINGINV`.`OWNER` SET `ITEMCOUNT` = (SELECT `ITEMCOUNT` - 1  WHERE `NAME` = @NameParam) WHERE `NAME` = @NameParam";
                 CleanUpCmd.Parameters.AddWithValue("@NameParam", CurrentItem.OwnerValue);
                 CleanUpCmd.ExecuteNonQuery();
             }

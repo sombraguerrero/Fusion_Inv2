@@ -99,7 +99,7 @@
             // ownerResultBindingSource
             // 
             this.ownerResultBindingSource.AllowNew = true;
-            this.ownerResultBindingSource.DataSource = typeof(GamingInventory.OwnerResult);
+            this.ownerResultBindingSource.DataSource = typeof(GamingInventory_V2.OwnerResult);
             // 
             // ownerCommit_btn
             // 

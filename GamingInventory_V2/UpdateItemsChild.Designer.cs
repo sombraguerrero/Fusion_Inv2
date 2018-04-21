@@ -306,7 +306,7 @@
             // 
             // itemResultBindingSource
             // 
-            this.itemResultBindingSource.DataSource = typeof(GamingInventory.ItemResult);
+            this.itemResultBindingSource.DataSource = typeof(GamingInventory_V2.ItemResult);
             // 
             // updateItemsClose_btn
             // 

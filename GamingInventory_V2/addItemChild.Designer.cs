@@ -31,17 +31,18 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(addItemChild));
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.typeValueDataGridViewComboBoxColumn = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.platformValueDataGridViewComboBoxColumn = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.serialValueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.descriptionValueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.itemResultBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.closeAddItem_btn = new System.Windows.Forms.Button();
             this.submitaddedItems_btn = new System.Windows.Forms.Button();
             this.addItemResults_label = new System.Windows.Forms.Label();
             this.ownerBox_unbound = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.itemResultBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.platformValueDataGridViewComboBoxColumn = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.itemResultBindingSource)).BeginInit();
             this.SuspendLayout();
@@ -50,74 +51,26 @@
             // 
             this.dataGridView1.AllowUserToOrderColumns = true;
             this.dataGridView1.AutoGenerateColumns = false;
+            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ID,
-            this.typeValueDataGridViewComboBoxColumn,
+            this.dataGridViewTextBoxColumn2,
+            this.dataGridViewTextBoxColumn3,
             this.platformValueDataGridViewComboBoxColumn,
-            this.serialValueDataGridViewTextBoxColumn,
-            this.descriptionValueDataGridViewTextBoxColumn});
+            this.dataGridViewTextBoxColumn5,
+            this.dataGridViewTextBoxColumn6});
             this.dataGridView1.DataSource = this.itemResultBindingSource;
-            this.dataGridView1.Location = new System.Drawing.Point(12, 61);
+            this.dataGridView1.Location = new System.Drawing.Point(30, 61);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(810, 275);
+            this.dataGridView1.Size = new System.Drawing.Size(1203, 275);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_RowEnter);
-            // 
-            // ID
-            // 
-            this.ID.HeaderText = "New ID";
-            this.ID.Name = "ID";
-            this.ID.ReadOnly = true;
-            this.ID.Width = 153;
-            // 
-            // typeValueDataGridViewComboBoxColumn
-            // 
-            this.typeValueDataGridViewComboBoxColumn.DataPropertyName = "TypeValue";
-            this.typeValueDataGridViewComboBoxColumn.HeaderText = "Item Type";
-            this.typeValueDataGridViewComboBoxColumn.Items.AddRange(new object[] {
-            "Console",
-            "Game",
-            "Peripheral",
-            "Utility",
-            "Cable"});
-            this.typeValueDataGridViewComboBoxColumn.Name = "typeValueDataGridViewComboBoxColumn";
-            this.typeValueDataGridViewComboBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.typeValueDataGridViewComboBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.typeValueDataGridViewComboBoxColumn.Width = 154;
-            // 
-            // platformValueDataGridViewComboBoxColumn
-            // 
-            this.platformValueDataGridViewComboBoxColumn.DataPropertyName = "PlatformValue";
-            this.platformValueDataGridViewComboBoxColumn.HeaderText = "Platform";
-            this.platformValueDataGridViewComboBoxColumn.Name = "platformValueDataGridViewComboBoxColumn";
-            this.platformValueDataGridViewComboBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.platformValueDataGridViewComboBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.platformValueDataGridViewComboBoxColumn.Width = 153;
-            // 
-            // serialValueDataGridViewTextBoxColumn
-            // 
-            this.serialValueDataGridViewTextBoxColumn.DataPropertyName = "SerialValue";
-            this.serialValueDataGridViewTextBoxColumn.HeaderText = "Serial/Title";
-            this.serialValueDataGridViewTextBoxColumn.Name = "serialValueDataGridViewTextBoxColumn";
-            this.serialValueDataGridViewTextBoxColumn.Width = 154;
-            // 
-            // descriptionValueDataGridViewTextBoxColumn
-            // 
-            this.descriptionValueDataGridViewTextBoxColumn.DataPropertyName = "DescriptionValue";
-            this.descriptionValueDataGridViewTextBoxColumn.HeaderText = "Description";
-            this.descriptionValueDataGridViewTextBoxColumn.Name = "descriptionValueDataGridViewTextBoxColumn";
-            this.descriptionValueDataGridViewTextBoxColumn.Width = 153;
-            // 
-            // itemResultBindingSource
-            // 
-            this.itemResultBindingSource.AllowNew = true;
-            this.itemResultBindingSource.DataSource = typeof(GamingInventory.ItemResult);
             // 
             // closeAddItem_btn
             // 
             this.closeAddItem_btn.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.closeAddItem_btn.Font = new System.Drawing.Font("Arial Black", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.closeAddItem_btn.Location = new System.Drawing.Point(637, 359);
+            this.closeAddItem_btn.Location = new System.Drawing.Point(1048, 342);
             this.closeAddItem_btn.Name = "closeAddItem_btn";
             this.closeAddItem_btn.Size = new System.Drawing.Size(185, 40);
             this.closeAddItem_btn.TabIndex = 1;
@@ -129,7 +82,7 @@
             // 
             this.submitaddedItems_btn.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.submitaddedItems_btn.Font = new System.Drawing.Font("Arial Black", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.submitaddedItems_btn.Location = new System.Drawing.Point(446, 359);
+            this.submitaddedItems_btn.Location = new System.Drawing.Point(857, 342);
             this.submitaddedItems_btn.Name = "submitaddedItems_btn";
             this.submitaddedItems_btn.Size = new System.Drawing.Size(185, 40);
             this.submitaddedItems_btn.TabIndex = 2;
@@ -167,12 +120,63 @@
             this.label2.TabIndex = 6;
             this.label2.Text = "Owner";
             // 
+            // itemResultBindingSource
+            // 
+            this.itemResultBindingSource.AllowNew = true;
+            this.itemResultBindingSource.DataSource = typeof(GamingInventory_V2.ItemResult);
+            // 
+            // ID
+            // 
+            this.ID.HeaderText = "New ID";
+            this.ID.Name = "ID";
+            this.ID.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            this.dataGridViewTextBoxColumn2.DataPropertyName = "IDValue";
+            this.dataGridViewTextBoxColumn2.HeaderText = "IDValue";
+            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            this.dataGridViewTextBoxColumn3.DataPropertyName = "TypeValue";
+            this.dataGridViewTextBoxColumn3.HeaderText = "TypeValue";
+            this.dataGridViewTextBoxColumn3.Items.AddRange(new object[] {
+            "Console",
+            "Game",
+            "Peripheral",
+            "Utility",
+            "Cable"});
+            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            this.dataGridViewTextBoxColumn3.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewTextBoxColumn3.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // platformValueDataGridViewComboBoxColumn
+            // 
+            this.platformValueDataGridViewComboBoxColumn.DataPropertyName = "PlatformValue";
+            this.platformValueDataGridViewComboBoxColumn.HeaderText = "PlatformValue";
+            this.platformValueDataGridViewComboBoxColumn.Name = "platformValueDataGridViewComboBoxColumn";
+            this.platformValueDataGridViewComboBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.platformValueDataGridViewComboBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // dataGridViewTextBoxColumn5
+            // 
+            this.dataGridViewTextBoxColumn5.DataPropertyName = "SerialValue";
+            this.dataGridViewTextBoxColumn5.HeaderText = "SerialValue";
+            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
+            // 
+            // dataGridViewTextBoxColumn6
+            // 
+            this.dataGridViewTextBoxColumn6.DataPropertyName = "DescriptionValue";
+            this.dataGridViewTextBoxColumn6.HeaderText = "DescriptionValue";
+            this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
+            // 
             // addItemChild
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(841, 402);
+            this.ClientSize = new System.Drawing.Size(1326, 412);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.ownerBox_unbound);
             this.Controls.Add(this.addItemResults_label);
@@ -198,10 +202,21 @@
         private System.Windows.Forms.Label addItemResults_label;
         private System.Windows.Forms.ComboBox ownerBox_unbound;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ID;
-        private System.Windows.Forms.DataGridViewComboBoxColumn typeValueDataGridViewComboBoxColumn;
-        private System.Windows.Forms.DataGridViewComboBoxColumn platformValueDataGridViewComboBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ownerValueDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn iDValueDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn typeValueDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn platformValueDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn serialValueDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn descriptionValueDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn lastCheckInValueDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn lastCheckOutValueDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn archivedValueDataGridViewCheckBoxColumn;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn bindingCheckValueDataGridViewCheckBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private System.Windows.Forms.DataGridViewComboBoxColumn dataGridViewTextBoxColumn3;
+        private System.Windows.Forms.DataGridViewComboBoxColumn platformValueDataGridViewComboBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
     }
 }

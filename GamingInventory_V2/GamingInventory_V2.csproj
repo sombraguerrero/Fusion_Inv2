@@ -189,8 +189,7 @@
       <DependentUpon>UpdateOwner.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
-    <None Include="Properties\DataSources\GamingInventory.ItemResult.datasource" />
-    <None Include="Properties\DataSources\GamingInventory.OwnerResult.datasource" />
+    <None Include="Properties\DataSources\ItemResult.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

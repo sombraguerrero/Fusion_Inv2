@@ -3,7 +3,7 @@ using System.Linq;
 using System.Text;
 using MySql.Data.MySqlClient;
 
-namespace GamingInventory
+namespace GamingInventory_V2
 {
     public class OwnerResult
     {

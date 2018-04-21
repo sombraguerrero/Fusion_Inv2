@@ -7,9 +7,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("GamingInventory_V3")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Anime Twin Cities")]
-[assembly: AssemblyProduct("GamingInventory_V2")]
-[assembly: AssemblyCopyright("Author: Robert Setter; Copyright ©  2018")]
+[assembly: AssemblyCompany("Quad Cities Anime, Inc")]
+[assembly: AssemblyProduct("Anime Fusion Gaming Inventory System")]
+[assembly: AssemblyCopyright("Author: Robert Setter")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -31,5 +31,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("3.0.0.0")]
-[assembly: AssemblyFileVersion("3.0.0.0")]
+[assembly: AssemblyVersion("4.0.0.0")]
+[assembly: AssemblyFileVersion("4.0.0.0")]

@@ -2,7 +2,6 @@
 using System.Drawing;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
-using GamingInventory;
 
 namespace GamingInventory_V2
 {

@@ -2,7 +2,6 @@
 using System.Drawing;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
-using GamingInventory;
 
 namespace GamingInventory_V2
 {
@@ -64,7 +63,7 @@ namespace GamingInventory_V2
             MySqlCommand GetOwnerInfo = new MySqlCommand("select max(id) from `gaminginv`.`items` where `Owner` = @NameParam" + ';', Form1.MasterConnection);
             GetOwnerInfo.Parameters.AddWithValue("@NameParam", ownerBox_unbound.SelectedItem.ToString());
             //Console.Write(GetOwnerInfo.ExecuteScalar());
-            if (GetOwnerInfo.ExecuteScalar() != System.DBNull.Value)
+            if (GetOwnerInfo.ExecuteScalar() != DBNull.Value)
                 idToStart = (uint)GetOwnerInfo.ExecuteScalar();
             else
             {
