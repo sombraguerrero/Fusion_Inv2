@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.importBtn = new System.Windows.Forms.Button();
             this.exportBtn = new System.Windows.Forms.Button();
             this.updateItem_btn = new System.Windows.Forms.Button();
@@ -40,13 +41,12 @@
             this.searchOwner_btn = new System.Windows.Forms.Button();
             this.searchItems_btn = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.itemsAudit_btn = new System.Windows.Forms.Button();
             this.gamesByPlatform_btn = new System.Windows.Forms.Button();
             this.UsageRpt_btn = new System.Windows.Forms.Button();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.button1 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -67,6 +67,17 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Management";
+            // 
+            // button1
+            // 
+            this.button1.Font = new System.Drawing.Font("Arial Black", 11F, System.Drawing.FontStyle.Bold);
+            this.button1.Location = new System.Drawing.Point(328, 19);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(93, 65);
+            this.button1.TabIndex = 6;
+            this.button1.Text = "Add Platform";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click_2);
             // 
             // importBtn
             // 
@@ -180,6 +191,17 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Reporting";
             // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(6, 19);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(79, 17);
+            this.checkBox1.TabIndex = 4;
+            this.checkBox1.Text = "Con Is Live";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.Click += new System.EventHandler(this.checkBox1_Click);
+            // 
             // itemsAudit_btn
             // 
             this.itemsAudit_btn.Font = new System.Drawing.Font("Arial Black", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -225,28 +247,6 @@
             this.openFileDialog1.FileName = "openFileDialog1";
             this.openFileDialog1.Filter = "SQL Script|*.sql";
             this.openFileDialog1.Title = "Select Database Dump to Import";
-            // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(6, 19);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(79, 17);
-            this.checkBox1.TabIndex = 4;
-            this.checkBox1.Text = "Con Is Live";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            this.checkBox1.Click += new System.EventHandler(this.checkBox1_Click);
-            // 
-            // button1
-            // 
-            this.button1.Font = new System.Drawing.Font("Arial Black", 11F, System.Drawing.FontStyle.Bold);
-            this.button1.Location = new System.Drawing.Point(328, 19);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(93, 65);
-            this.button1.TabIndex = 6;
-            this.button1.Text = "Add Platform";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click_2);
             // 
             // Form1
             // 
