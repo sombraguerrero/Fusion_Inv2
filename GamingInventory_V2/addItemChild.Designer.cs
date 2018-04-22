@@ -31,18 +31,18 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(addItemChild));
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.closeAddItem_btn = new System.Windows.Forms.Button();
-            this.submitaddedItems_btn = new System.Windows.Forms.Button();
-            this.addItemResults_label = new System.Windows.Forms.Label();
-            this.ownerBox_unbound = new System.Windows.Forms.ComboBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.itemResultBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.platformValueDataGridViewComboBoxColumn = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.itemResultBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.closeAddItem_btn = new System.Windows.Forms.Button();
+            this.submitaddedItems_btn = new System.Windows.Forms.Button();
+            this.addItemResults_label = new System.Windows.Forms.Label();
+            this.ownerBox_unbound = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.itemResultBindingSource)).BeginInit();
             this.SuspendLayout();
@@ -65,6 +65,57 @@
             this.dataGridView1.Size = new System.Drawing.Size(1203, 275);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_RowEnter);
+            // 
+            // ID
+            // 
+            this.ID.HeaderText = "New ID";
+            this.ID.Name = "ID";
+            this.ID.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            this.dataGridViewTextBoxColumn2.DataPropertyName = "IDValue";
+            this.dataGridViewTextBoxColumn2.HeaderText = "IDValue";
+            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            this.dataGridViewTextBoxColumn3.DataPropertyName = "TypeValue";
+            this.dataGridViewTextBoxColumn3.HeaderText = "TypeValue";
+            this.dataGridViewTextBoxColumn3.Items.AddRange(new object[] {
+            "Console",
+            "Game",
+            "Peripheral",
+            "Utility",
+            "Cable"});
+            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            this.dataGridViewTextBoxColumn3.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewTextBoxColumn3.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // platformValueDataGridViewComboBoxColumn
+            // 
+            this.platformValueDataGridViewComboBoxColumn.DataPropertyName = "PlatformValue";
+            this.platformValueDataGridViewComboBoxColumn.HeaderText = "PlatformValue";
+            this.platformValueDataGridViewComboBoxColumn.Name = "platformValueDataGridViewComboBoxColumn";
+            this.platformValueDataGridViewComboBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.platformValueDataGridViewComboBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // dataGridViewTextBoxColumn5
+            // 
+            this.dataGridViewTextBoxColumn5.DataPropertyName = "SerialValue";
+            this.dataGridViewTextBoxColumn5.HeaderText = "SerialValue";
+            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
+            // 
+            // dataGridViewTextBoxColumn6
+            // 
+            this.dataGridViewTextBoxColumn6.DataPropertyName = "DescriptionValue";
+            this.dataGridViewTextBoxColumn6.HeaderText = "DescriptionValue";
+            this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
+            // 
+            // itemResultBindingSource
+            // 
+            this.itemResultBindingSource.AllowNew = true;
+            this.itemResultBindingSource.DataSource = typeof(GamingInventory_V2.ItemResult);
             // 
             // closeAddItem_btn
             // 
@@ -119,57 +170,6 @@
             this.label2.Size = new System.Drawing.Size(80, 27);
             this.label2.TabIndex = 6;
             this.label2.Text = "Owner";
-            // 
-            // itemResultBindingSource
-            // 
-            this.itemResultBindingSource.AllowNew = true;
-            this.itemResultBindingSource.DataSource = typeof(GamingInventory_V2.ItemResult);
-            // 
-            // ID
-            // 
-            this.ID.HeaderText = "New ID";
-            this.ID.Name = "ID";
-            this.ID.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn2
-            // 
-            this.dataGridViewTextBoxColumn2.DataPropertyName = "IDValue";
-            this.dataGridViewTextBoxColumn2.HeaderText = "IDValue";
-            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            // 
-            // dataGridViewTextBoxColumn3
-            // 
-            this.dataGridViewTextBoxColumn3.DataPropertyName = "TypeValue";
-            this.dataGridViewTextBoxColumn3.HeaderText = "TypeValue";
-            this.dataGridViewTextBoxColumn3.Items.AddRange(new object[] {
-            "Console",
-            "Game",
-            "Peripheral",
-            "Utility",
-            "Cable"});
-            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            this.dataGridViewTextBoxColumn3.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridViewTextBoxColumn3.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            // 
-            // platformValueDataGridViewComboBoxColumn
-            // 
-            this.platformValueDataGridViewComboBoxColumn.DataPropertyName = "PlatformValue";
-            this.platformValueDataGridViewComboBoxColumn.HeaderText = "PlatformValue";
-            this.platformValueDataGridViewComboBoxColumn.Name = "platformValueDataGridViewComboBoxColumn";
-            this.platformValueDataGridViewComboBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.platformValueDataGridViewComboBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            // 
-            // dataGridViewTextBoxColumn5
-            // 
-            this.dataGridViewTextBoxColumn5.DataPropertyName = "SerialValue";
-            this.dataGridViewTextBoxColumn5.HeaderText = "SerialValue";
-            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
-            // 
-            // dataGridViewTextBoxColumn6
-            // 
-            this.dataGridViewTextBoxColumn6.DataPropertyName = "DescriptionValue";
-            this.dataGridViewTextBoxColumn6.HeaderText = "DescriptionValue";
-            this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
             // 
             // addItemChild
             // 
