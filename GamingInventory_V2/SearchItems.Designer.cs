@@ -149,7 +149,7 @@
             "Console",
             "Game",
             "Peripheral",
-            "Utility",
+            "Controller",
             "Cable"});
             this.TypeCombo.Location = new System.Drawing.Point(257, 32);
             this.TypeCombo.Name = "TypeCombo";

@@ -2,13 +2,17 @@
 using System.Drawing;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
+using System.Collections.Generic;
 
 namespace GamingInventory_V2
 {
     public partial class addItemChild : Form
     {
-        uint idToStart = 0;
+        decimal initOwnerID;
         int currentPos = 0;
+        int[] QtyMin = new int[5];
+        int[] QtyMax = new int[5];
+        List<decimal> maxIDs = new List<decimal>();
 
         public addItemChild()
         {
@@ -17,6 +21,21 @@ namespace GamingInventory_V2
             addItemResults_label.ForeColor = Color.Green;
             populateOwnersBox();
             populatePlatforms();
+            populateQtys();
+        }
+
+        private void populateQtys()
+        {
+            MySqlCommand minsCommand = new MySqlCommand("SELECT QtyMin, QtyMax from itemtypes", Form1.MasterConnection);
+            MySqlDataReader mySqlDataReader = minsCommand.ExecuteReader();
+            int i = 0;
+            while (mySqlDataReader.Read())
+            {
+                QtyMin[i] = mySqlDataReader.GetInt32(0);
+                QtyMax[i] = mySqlDataReader.GetInt32(1);
+                i++;
+            }
+            mySqlDataReader.Close();
         }
 
         private void populatePlatforms()
@@ -59,24 +78,46 @@ namespace GamingInventory_V2
         private void ownerBox_unbound_SelectionChangeCommitted(object sender, EventArgs e)
         {
             itemResultBindingSource.Clear();
+            initOwnerID = 0;
             currentPos = 0;
-            MySqlCommand GetOwnerInfo = new MySqlCommand("select max(id) from `gaminginv`.`items` where `Owner` = @NameParam" + ';', Form1.MasterConnection);
-            GetOwnerInfo.Parameters.AddWithValue("@NameParam", ownerBox_unbound.SelectedItem.ToString());
-            //Console.Write(GetOwnerInfo.ExecuteScalar());
-            if (GetOwnerInfo.ExecuteScalar() != DBNull.Value)
-                idToStart = (uint)GetOwnerInfo.ExecuteScalar();
-            else
+            string chosenOwner = ownerBox_unbound.SelectedItem.ToString();
+            MySqlCommand GetOwnerInfo = new MySqlCommand
             {
-                GetOwnerInfo.CommandText = "SELECT MAX(ID) from owner";
-                idToStart = (uint)GetOwnerInfo.ExecuteScalar();
-            }
+                Connection = Form1.MasterConnection
+            };
+            GetOwnerInfo.Parameters.AddWithValue("@NameParam", chosenOwner);
+            GetOwnerInfo.CommandText = "SELECT ID FROM `OWNER` WHERE `NAME` = @NameParam";
+            //object testObject = GetOwnerInfo.ExecuteScalar();
+            initOwnerID = (uint)GetOwnerInfo.ExecuteScalar();
+            GetOwnerInfo.CommandText = $"SELECT COALESCE(MAX(ID), {initOwnerID + QtyMin[0]}) FROM ITEMS WHERE `OWNER` = @NameParam AND `Type` = 'Console'";
+            maxIDs.Add((decimal)GetOwnerInfo.ExecuteScalar());
+            GetOwnerInfo.CommandText = $"SELECT COALESCE(MAX(ID), {initOwnerID + QtyMin[1]}) FROM ITEMS WHERE `OWNER` = @NameParam AND `Type` = 'Controller'";
+            maxIDs.Add((decimal)GetOwnerInfo.ExecuteScalar());
+            GetOwnerInfo.CommandText = $"SELECT COALESCE(MAX(ID), {initOwnerID + QtyMin[2]}) FROM ITEMS WHERE `OWNER` = @NameParam AND `Type` = 'Peripheral'";
+            maxIDs.Add((decimal)GetOwnerInfo.ExecuteScalar());
+            GetOwnerInfo.CommandText = $"SELECT COALESCE(MAX(ID), {initOwnerID + QtyMin[3]}) FROM ITEMS WHERE `OWNER` = @NameParam AND `Type` = 'Cable'";
+            maxIDs.Add((decimal)GetOwnerInfo.ExecuteScalar());
+            GetOwnerInfo.CommandText = $"SELECT COALESCE(MAX(ID), {initOwnerID + QtyMin[4]}) FROM ITEMS WHERE `OWNER` = @NameParam AND `Type` = 'Game'";
+            maxIDs.Add((decimal)GetOwnerInfo.ExecuteScalar());
         }
 
-        private void dataGridView1_RowEnter(object sender, DataGridViewCellEventArgs e)
+        private void dataGridView1_CellValidated(object sender, DataGridViewCellEventArgs e)
         {
+            string[] typeNames = { "Console", "Controller", "Peripheral", "Cable", "Game" };
             if (ownerBox_unbound.SelectedItem != null && dataGridView1[0, e.RowIndex].Value == null && e.RowIndex >= currentPos)
             {
-                dataGridView1[0, e.RowIndex].Value = (int)++idToStart;
+                ItemResult temp = (ItemResult)itemResultBindingSource.Current;
+                for (int i = 0; i < typeNames.Length; i++)
+                {
+                    if (temp.TypeValue.Equals(typeNames[i]))
+                    {
+                        if ((maxIDs[i] + 1) - initOwnerID > QtyMax[i])
+                            MessageBox.Show($"This owner has exceeded the allowed number of {typeNames[i]}s!", "WARNING");
+                        else
+                            dataGridView1[0, e.RowIndex].Value = maxIDs[i]++;
+                        break;
+                    }
+                }
                 currentPos++;
             }
             else if (e.RowIndex < currentPos)

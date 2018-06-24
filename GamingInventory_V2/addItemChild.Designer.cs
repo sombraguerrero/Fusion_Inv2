@@ -64,7 +64,7 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(1203, 275);
             this.dataGridView1.TabIndex = 0;
-            this.dataGridView1.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_RowEnter);
+            this.dataGridView1.CellValidated += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellValidated);
             // 
             // ID
             // 
@@ -86,7 +86,7 @@
             "Console",
             "Game",
             "Peripheral",
-            "Utility",
+            "Controller",
             "Cable"});
             this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
             this.dataGridViewTextBoxColumn3.Resizable = System.Windows.Forms.DataGridViewTriState.True;
