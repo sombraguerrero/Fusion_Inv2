@@ -8,18 +8,15 @@ namespace GamingInventory_V2
 {
     public partial class Form1 : Form
     {
-        private static MySqlConnection masterConnection = new MySqlConnection();
-        private static bool liveCon = false;
-
-        public static bool LiveCon { get => liveCon; }
-        public static MySqlConnection MasterConnection { get => masterConnection; }
+        public static bool LiveCon { get; private set; } = false;
+        public static MySqlConnection MasterConnection { get; } = new MySqlConnection();
 
         public Form1()
         {
             InitializeComponent();
             EncryptConnectionString();
 
-            MasterConnection.ConnectionString = ConfigurationManager.ConnectionStrings["AD_Secure"].ConnectionString;
+            MasterConnection.ConnectionString = ConfigurationManager.ConnectionStrings["Fusion_Secure"].ConnectionString;
             try
             {
                 MasterConnection.Open();
@@ -35,7 +32,7 @@ namespace GamingInventory_V2
                 if (initialFlag == 1)
                 {
                     checkBox1.Checked = true;
-                    liveCon = true;
+                    LiveCon = true;
                 }
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
@@ -50,7 +47,7 @@ namespace GamingInventory_V2
             try
             {
                 // Open the configuration file and retrieve the connectionStrings section.
-                configuration = ConfigurationManager.OpenExeConfiguration("GamingInventory_V2.exe");
+                configuration = ConfigurationManager.OpenExeConfiguration("Fusion_Inventory.exe");
                 ConnectionStringsSection configSection =
                 configuration.GetSection("connectionStrings") as ConnectionStringsSection;
                 if ((!(configSection.ElementInformation.IsLocked)) &&
@@ -185,12 +182,12 @@ namespace GamingInventory_V2
             if (checkBox1.CheckState == CheckState.Unchecked)
             {
                 mySqlCommand.CommandText = "update configs set con_live = 0,con_end = now();";
-                liveCon = false;
+                LiveCon = false;
             }
             else
             {
                 mySqlCommand.CommandText = "update configs set con_live = 1,con_start = now();";
-                liveCon = true;
+                LiveCon = true;
             }
             mySqlCommand.ExecuteNonQuery();
         }
