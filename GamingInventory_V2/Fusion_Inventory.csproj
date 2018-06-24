@@ -7,8 +7,8 @@
     <ProjectGuid>{4E846EC9-DB23-453A-96CF-67BE0C4E584C}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>GamingInventory_V2</RootNamespace>
-    <AssemblyName>GamingInventory_V2</AssemblyName>
+    <RootNamespace>Fusion_Inventory</RootNamespace>
+    <AssemblyName>Fusion_Inventory</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <IsWebBootstrapper>false</IsWebBootstrapper>
@@ -102,6 +102,12 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="ImportCSV.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ImportCSV.Designer.cs">
+      <DependentUpon>ImportCSV.cs</DependentUpon>
+    </Compile>
     <Compile Include="GamesByPlatform.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -156,6 +162,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ImportCSV.resx">
+      <DependentUpon>ImportCSV.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GamesByPlatform.resx">
       <DependentUpon>GamesByPlatform.cs</DependentUpon>

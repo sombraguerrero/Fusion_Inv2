@@ -154,7 +154,7 @@ namespace GamingInventory_V2
                 Dump.StartInfo.WorkingDirectory = "MariaDB\\bin\\";
                 Dump.StartInfo.FileName = "mysqldump";
                 string dest = saveFileDialog1.FileName;
-                Dump.StartInfo.Arguments = string.Format("--add-drop-database --result-file=\"{0}\" -uad_gaming -pAtrium04 gaminginv", dest);
+                Dump.StartInfo.Arguments = string.Format("--add-drop-database --routines --result-file=\"{0}\" -uroot -p gaminginv", dest);
                 Dump.Start();
             }
         }
@@ -204,6 +204,12 @@ namespace GamingInventory_V2
             mySqlCommand.CommandText = "UPDATE configs set Platforms = concat(Platforms, @added_platform);";
             mySqlCommand.Parameters.AddWithValue("@added_platform", s);
             mySqlCommand.ExecuteNonQuery();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            ImportCSV importCSVForm = new ImportCSV();
+            importCSVForm.Show();
         }
     }
 }

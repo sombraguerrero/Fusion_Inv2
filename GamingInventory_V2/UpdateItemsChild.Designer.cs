@@ -44,6 +44,10 @@
             this.DescriptionCheck = new System.Windows.Forms.CheckBox();
             this.findItems_btn = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.itemResultBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.updateItemsClose_btn = new System.Windows.Forms.Button();
+            this.submitItemUpdates_btn = new System.Windows.Forms.Button();
+            this.updateResults_label = new System.Windows.Forms.Label();
             this.ownerValueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.iDValueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.typeValueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -53,10 +57,6 @@
             this.lastCheckInValueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.lastCheckOutValueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.archivedValueDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.itemResultBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.updateItemsClose_btn = new System.Windows.Forms.Button();
-            this.submitItemUpdates_btn = new System.Windows.Forms.Button();
-            this.updateResults_label = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.IDSpinner)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.itemResultBindingSource)).BeginInit();
@@ -234,14 +234,51 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(1047, 309);
             this.dataGridView1.TabIndex = 13;
-            this.dataGridView1.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellEnter);
             this.dataGridView1.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellValueChanged);
+            // 
+            // itemResultBindingSource
+            // 
+            this.itemResultBindingSource.DataSource = typeof(GamingInventory_V2.ItemResult);
+            // 
+            // updateItemsClose_btn
+            // 
+            this.updateItemsClose_btn.Font = new System.Drawing.Font("Arial Black", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.updateItemsClose_btn.Location = new System.Drawing.Point(709, 394);
+            this.updateItemsClose_btn.Name = "updateItemsClose_btn";
+            this.updateItemsClose_btn.Size = new System.Drawing.Size(187, 42);
+            this.updateItemsClose_btn.TabIndex = 14;
+            this.updateItemsClose_btn.Text = "Close";
+            this.updateItemsClose_btn.UseVisualStyleBackColor = true;
+            this.updateItemsClose_btn.Click += new System.EventHandler(this.updateItemsClose_btn_Click);
+            // 
+            // submitItemUpdates_btn
+            // 
+            this.submitItemUpdates_btn.Font = new System.Drawing.Font("Arial Black", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.submitItemUpdates_btn.Location = new System.Drawing.Point(516, 394);
+            this.submitItemUpdates_btn.Name = "submitItemUpdates_btn";
+            this.submitItemUpdates_btn.Size = new System.Drawing.Size(187, 42);
+            this.submitItemUpdates_btn.TabIndex = 15;
+            this.submitItemUpdates_btn.Text = "Submit";
+            this.submitItemUpdates_btn.UseVisualStyleBackColor = true;
+            this.submitItemUpdates_btn.Click += new System.EventHandler(this.submitItemUpdates_btn_Click);
+            // 
+            // updateResults_label
+            // 
+            this.updateResults_label.AutoSize = true;
+            this.updateResults_label.Font = new System.Drawing.Font("Arial Black", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.updateResults_label.Location = new System.Drawing.Point(31, 394);
+            this.updateResults_label.Name = "updateResults_label";
+            this.updateResults_label.Size = new System.Drawing.Size(356, 30);
+            this.updateResults_label.TabIndex = 16;
+            this.updateResults_label.Text = "0 Items Updated Successfully";
+            this.updateResults_label.Visible = false;
             // 
             // ownerValueDataGridViewTextBoxColumn
             // 
             this.ownerValueDataGridViewTextBoxColumn.DataPropertyName = "OwnerValue";
             this.ownerValueDataGridViewTextBoxColumn.HeaderText = "Owner";
             this.ownerValueDataGridViewTextBoxColumn.Name = "ownerValueDataGridViewTextBoxColumn";
+            this.ownerValueDataGridViewTextBoxColumn.ReadOnly = true;
             this.ownerValueDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.ownerValueDataGridViewTextBoxColumn.Width = 112;
             // 
@@ -303,43 +340,6 @@
             this.archivedValueDataGridViewCheckBoxColumn.HeaderText = "Archived";
             this.archivedValueDataGridViewCheckBoxColumn.Name = "archivedValueDataGridViewCheckBoxColumn";
             this.archivedValueDataGridViewCheckBoxColumn.Width = 112;
-            // 
-            // itemResultBindingSource
-            // 
-            this.itemResultBindingSource.DataSource = typeof(GamingInventory_V2.ItemResult);
-            // 
-            // updateItemsClose_btn
-            // 
-            this.updateItemsClose_btn.Font = new System.Drawing.Font("Arial Black", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.updateItemsClose_btn.Location = new System.Drawing.Point(709, 394);
-            this.updateItemsClose_btn.Name = "updateItemsClose_btn";
-            this.updateItemsClose_btn.Size = new System.Drawing.Size(187, 42);
-            this.updateItemsClose_btn.TabIndex = 14;
-            this.updateItemsClose_btn.Text = "Close";
-            this.updateItemsClose_btn.UseVisualStyleBackColor = true;
-            this.updateItemsClose_btn.Click += new System.EventHandler(this.updateItemsClose_btn_Click);
-            // 
-            // submitItemUpdates_btn
-            // 
-            this.submitItemUpdates_btn.Font = new System.Drawing.Font("Arial Black", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.submitItemUpdates_btn.Location = new System.Drawing.Point(516, 394);
-            this.submitItemUpdates_btn.Name = "submitItemUpdates_btn";
-            this.submitItemUpdates_btn.Size = new System.Drawing.Size(187, 42);
-            this.submitItemUpdates_btn.TabIndex = 15;
-            this.submitItemUpdates_btn.Text = "Submit";
-            this.submitItemUpdates_btn.UseVisualStyleBackColor = true;
-            this.submitItemUpdates_btn.Click += new System.EventHandler(this.submitItemUpdates_btn_Click);
-            // 
-            // updateResults_label
-            // 
-            this.updateResults_label.AutoSize = true;
-            this.updateResults_label.Font = new System.Drawing.Font("Arial Black", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.updateResults_label.Location = new System.Drawing.Point(31, 394);
-            this.updateResults_label.Name = "updateResults_label";
-            this.updateResults_label.Size = new System.Drawing.Size(356, 30);
-            this.updateResults_label.TabIndex = 16;
-            this.updateResults_label.Text = "0 Items Updated Successfully";
-            this.updateResults_label.Visible = false;
             // 
             // UpdateItemsChild
             // 

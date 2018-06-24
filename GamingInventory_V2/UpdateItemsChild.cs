@@ -9,7 +9,6 @@ namespace GamingInventory_V2
     public partial class UpdateItemsChild : Form
     {
         ArrayList dirtyRows;
-        string PreviousOwner;
 
         public UpdateItemsChild()
         {
@@ -155,52 +154,12 @@ namespace GamingInventory_V2
             dirtyRows.Clear();
         }
 
-        
-        private void ChangeOwner(int column, int row)
-        {
-            DialogResult changeOwner;
-            ItemResult CurrentItem = itemResultBindingSource.Current as ItemResult;
-            int PreviousItemIndex = itemResultBindingSource.Position;
-            decimal CurrentItemID;
-            MySqlCommand CleanUpCmd = new MySqlCommand();
-            CleanUpCmd.CommandType = System.Data.CommandType.StoredProcedure;
-            CleanUpCmd.CommandText = @"changeItemOwner";
-            CleanUpCmd.Connection = Form1.MasterConnection;
-
-            changeOwner = MessageBox.Show("Are you sure you want to change the owner of this item?", "Please confirm!", MessageBoxButtons.YesNo);
-            if (changeOwner == DialogResult.Yes)
-            {
-                CurrentItemID = CurrentItem.IDValue; //old value
-                CurrentItem.LastCheckInValue = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                CurrentItem.IDValue = CurrentItem.Insert(Form1.MasterConnection); //new value
-                itemResultBindingSource.Add(CurrentItem);
-                itemResultBindingSource.RemoveAt(PreviousItemIndex);
-                CleanUpCmd.Parameters.AddWithValue("@IDParam", CurrentItemID);
-                CleanUpCmd.Parameters.AddWithValue("@NameParam", CurrentItem.OwnerValue);
-                CleanUpCmd.ExecuteNonQuery();
-            }
-            else
-            {
-                (dataGridView1[column, row] as DataGridViewTextBoxCell).Value = PreviousOwner;
-            }
-        }
-
         private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            if (dataGridView1.Columns[e.ColumnIndex].Name.Equals("ownerValueDataGridViewTextBoxColumn") && (!PreviousOwner.Equals(dataGridView1[e.ColumnIndex, e.RowIndex].Value)))
-            {
-                ChangeOwner(e.ColumnIndex, e.RowIndex);
-            }
-            else if (dirtyRows != null && !dirtyRows.Contains(e.RowIndex))
+            if (dirtyRows != null && !dirtyRows.Contains(e.RowIndex))
             {
                 dirtyRows.Add(e.RowIndex);
             }
-        }
-
-        private void dataGridView1_CellEnter(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.ColumnIndex == 0)
-                PreviousOwner = (itemResultBindingSource.Current as ItemResult).OwnerValue;
         }
 
         private void SerialText_KeyPress(object sender, KeyPressEventArgs e)
