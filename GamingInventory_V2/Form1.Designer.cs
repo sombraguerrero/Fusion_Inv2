@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.importCSVbtn = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.importBtn = new System.Windows.Forms.Button();
             this.exportBtn = new System.Windows.Forms.Button();
@@ -47,7 +48,6 @@
             this.UsageRpt_btn = new System.Windows.Forms.Button();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.button2 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -55,7 +55,7 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.button2);
+            this.groupBox1.Controls.Add(this.importCSVbtn);
             this.groupBox1.Controls.Add(this.button1);
             this.groupBox1.Controls.Add(this.importBtn);
             this.groupBox1.Controls.Add(this.exportBtn);
@@ -69,6 +69,17 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Management";
+            // 
+            // importCSVbtn
+            // 
+            this.importCSVbtn.Font = new System.Drawing.Font("Arial Black", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.importCSVbtn.Location = new System.Drawing.Point(328, 90);
+            this.importCSVbtn.Name = "importCSVbtn";
+            this.importCSVbtn.Size = new System.Drawing.Size(93, 65);
+            this.importCSVbtn.TabIndex = 7;
+            this.importCSVbtn.Text = "Import CSV";
+            this.importCSVbtn.UseVisualStyleBackColor = true;
+            this.importCSVbtn.Click += new System.EventHandler(this.button2_Click);
             // 
             // button1
             // 
@@ -250,17 +261,6 @@
             this.openFileDialog1.Filter = "SQL Script|*.sql";
             this.openFileDialog1.Title = "Select Database Dump to Import";
             // 
-            // button2
-            // 
-            this.button2.Font = new System.Drawing.Font("Arial Black", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.Location = new System.Drawing.Point(328, 90);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(93, 65);
-            this.button2.TabIndex = 7;
-            this.button2.Text = "Import CSV";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -301,7 +301,7 @@
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button importCSVbtn;
     }
 }
 

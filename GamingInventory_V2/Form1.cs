@@ -17,6 +17,11 @@ namespace GamingInventory_V2
             EncryptConnectionString();
 
             MasterConnection.ConnectionString = ConfigurationManager.ConnectionStrings["Fusion_Secure"].ConnectionString;
+            if (!MasterConnection.ConnectionString.Contains("localhost"))
+            {
+                exportBtn.Enabled = false;
+                importBtn.Enabled = false;
+            }
             try
             {
                 MasterConnection.Open();
@@ -151,7 +156,7 @@ namespace GamingInventory_V2
                 Dump.StartInfo.WorkingDirectory = "MariaDB\\bin\\";
                 Dump.StartInfo.FileName = "mysqldump";
                 string dest = saveFileDialog1.FileName;
-                Dump.StartInfo.Arguments = string.Format("--add-drop-database --routines --result-file=\"{0}\" -uroot -p gaminginv", dest);
+                Dump.StartInfo.Arguments = string.Format("--add-drop-database --routines --result-file=\"{0}\" -ufusion -p gaminginv", dest);
                 Dump.Start();
             }
         }
@@ -165,7 +170,7 @@ namespace GamingInventory_V2
                     Import.StartInfo.WorkingDirectory = "MariaDB\\bin\\";
                     Import.StartInfo.FileName = "mysql";
                     string dest = openFileDialog1.FileName;
-                    Import.StartInfo.Arguments = string.Format("-uad_gaming -pAtrium04 gaminginv -e \"\\. {0}\"", dest);
+                    Import.StartInfo.Arguments = string.Format("-ufusion -p gaminginv -e \"\\. {0}\"", dest);
                     Import.Start();
                 }
         }
