@@ -108,6 +108,7 @@ namespace GamingInventory_V2
             MySqlCommand SelectItemsToUpdate = new MySqlCommand();
             MySqlDataReader ReadItemsToUpdate = null;
 
+            dirtyRows.Clear();
             itemResultBindingSource.Clear();
             ItemResult ItemToSelect = new ItemResult();
             GetValidFields(ItemToSelect);

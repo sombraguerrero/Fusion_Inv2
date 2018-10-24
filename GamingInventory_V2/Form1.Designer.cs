@@ -209,9 +209,9 @@
             this.checkBox1.AutoSize = true;
             this.checkBox1.Location = new System.Drawing.Point(6, 19);
             this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(79, 17);
+            this.checkBox1.Size = new System.Drawing.Size(120, 17);
             this.checkBox1.TabIndex = 4;
-            this.checkBox1.Text = "Con Is Live";
+            this.checkBox1.Text = "Record Timestamps";
             this.checkBox1.UseVisualStyleBackColor = true;
             this.checkBox1.Click += new System.EventHandler(this.checkBox1_Click);
             // 
@@ -222,7 +222,7 @@
             this.itemsAudit_btn.Name = "itemsAudit_btn";
             this.itemsAudit_btn.Size = new System.Drawing.Size(122, 49);
             this.itemsAudit_btn.TabIndex = 2;
-            this.itemsAudit_btn.Text = "Audit Items";
+            this.itemsAudit_btn.Text = "Load-In/Load-Out";
             this.itemsAudit_btn.UseVisualStyleBackColor = true;
             this.itemsAudit_btn.Click += new System.EventHandler(this.itemsAudit_btn_Click);
             // 

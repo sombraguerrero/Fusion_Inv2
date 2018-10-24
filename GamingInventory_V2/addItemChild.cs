@@ -12,6 +12,7 @@ namespace GamingInventory_V2
         int currentPos = 0;
         int[] QtyMin = new int[5];
         int[] QtyMax = new int[5];
+        int[] counters = { 0, 0, 0, 0, 0 };
         List<decimal> maxIDs = new List<decimal>();
 
         public addItemChild()
@@ -68,6 +69,7 @@ namespace GamingInventory_V2
             }
             addItemResults_label.Text = count + " items added successfully!";
             addItemResults_label.Show();
+            RefreshMaximums();
         }
 
         private void closeAddItem_btn_Click(object sender, EventArgs e)
@@ -77,9 +79,20 @@ namespace GamingInventory_V2
 
         private void ownerBox_unbound_SelectionChangeCommitted(object sender, EventArgs e)
         {
+            if (!submitaddedItems_btn.Enabled)
+                submitaddedItems_btn.Enabled = true;
+            RefreshMaximums();
+        }
+
+        private void RefreshMaximums()
+        {
             itemResultBindingSource.Clear();
             initOwnerID = 0;
             currentPos = 0;
+            for (int i = 0; i < counters.Length; i++)
+                counters[i] = 0;
+            if (maxIDs.Count > 0)
+                maxIDs.Clear();
             string chosenOwner = ownerBox_unbound.SelectedItem.ToString();
             MySqlCommand GetOwnerInfo = new MySqlCommand
             {
@@ -111,10 +124,18 @@ namespace GamingInventory_V2
                 {
                     if (temp.TypeValue.Equals(typeNames[i]))
                     {
-                        if ((maxIDs[i] + 1) - initOwnerID > QtyMax[i])
+                        if ((maxIDs[i] + counters[i]) - initOwnerID > QtyMax[i])
                             MessageBox.Show($"This owner has exceeded the allowed number of {typeNames[i]}s!", "WARNING");
+                        else if (maxIDs[i] + counters[i] == initOwnerID)
+                        {
+                            dataGridView1[0, e.RowIndex].Value = maxIDs[i];
+                            counters[i]++;
+                        }
                         else
-                            dataGridView1[0, e.RowIndex].Value = maxIDs[i]++;
+                        {
+                            dataGridView1[0, e.RowIndex].Value = maxIDs[i] + counters[i];
+                            counters[i]++;
+                        }
                         break;
                     }
                 }

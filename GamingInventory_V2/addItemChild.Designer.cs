@@ -132,6 +132,7 @@
             // submitaddedItems_btn
             // 
             this.submitaddedItems_btn.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.submitaddedItems_btn.Enabled = false;
             this.submitaddedItems_btn.Font = new System.Drawing.Font("Arial Black", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.submitaddedItems_btn.Location = new System.Drawing.Point(857, 342);
             this.submitaddedItems_btn.Name = "submitaddedItems_btn";
