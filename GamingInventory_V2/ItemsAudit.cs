@@ -2,7 +2,6 @@
 using System.Drawing;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
-using MySql.Data.Types;
 using Excel = Microsoft.Office.Interop.Excel;
 
 namespace GamingInventory_V2

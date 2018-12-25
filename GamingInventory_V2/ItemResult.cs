@@ -82,14 +82,6 @@ namespace GamingInventory_V2
 
         public override string ToString() => string.Format("{0} : {1} | In: {2} | Out: {3}", IDValue, OwnerValue, LastCheckInValue, LastCheckOutValue);
 
-        public void FinalCheckIn(MySqlConnection conn)
-        {
-            MySqlCommand FinalCheckInCmd = new MySqlCommand("UPDATE `ITEMS` SET `LASTCHECKOUT` = @CheckOutParam WHERE `ID` = @IDParam" + ';', conn);
-            FinalCheckInCmd.Parameters.AddWithValue("@IDParam", IDValue);
-            FinalCheckInCmd.Parameters.AddWithValue("@CheckOutParam", LastCheckOutValue);
-            FinalCheckInCmd.ExecuteNonQuery();
-        }
-
         public decimal Insert(MySqlConnection conn)
         {
             MySqlCommand addItemCmd = new MySqlCommand();

@@ -78,7 +78,7 @@ namespace GamingInventory_V2
                     while (!itemReader.EndOfStream)
                     {
                         parts = itemReader.ReadLine().Split(',');
-                        items.Add(new ItemResult(parts[0], decimal.Parse(parts[1]), parts[2], parts[3], parts[4], parts[5], string.Empty));
+                        items.Add(new ItemResult(parts[0], decimal.Parse(parts[1]), parts[2], parts[3], parts[4], parts[5], null));
                     }
                     progressBar1.Maximum = items.Count;
                 }
