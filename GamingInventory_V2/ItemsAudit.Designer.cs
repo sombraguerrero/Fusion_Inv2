@@ -31,9 +31,9 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ItemsAudit));
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.itemResultBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
-            this.itemResultBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.ownerValueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.iDValueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.typeValueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -69,6 +69,10 @@
             this.dataGridView1.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellValueChanged);
             this.dataGridView1.CurrentCellDirtyStateChanged += new System.EventHandler(this.dataGridView1_CurrentCellDirtyStateChanged);
             // 
+            // itemResultBindingSource
+            // 
+            this.itemResultBindingSource.DataSource = typeof(GamingInventory_V2.ItemResult);
+            // 
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Arial Black", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -90,10 +94,6 @@
             this.button2.Text = "Close";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // itemResultBindingSource
-            // 
-            this.itemResultBindingSource.DataSource = typeof(GamingInventory_V2.ItemResult);
             // 
             // ownerValueDataGridViewTextBoxColumn
             // 
@@ -149,9 +149,11 @@
             // 
             // LogisticStateUpdated
             // 
+            this.LogisticStateUpdated.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
             this.LogisticStateUpdated.DataPropertyName = "LogisticStateUpdated";
             this.LogisticStateUpdated.HeaderText = "LogisticStateUpdated";
             this.LogisticStateUpdated.Name = "LogisticStateUpdated";
+            this.LogisticStateUpdated.Width = 134;
             // 
             // ItemsAudit
             // 

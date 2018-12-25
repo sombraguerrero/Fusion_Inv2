@@ -79,6 +79,11 @@ namespace GamingInventory_V2
                 DataGridViewComboBoxCell c = (DataGridViewComboBoxCell)dataGridView1[e.ColumnIndex, e.RowIndex];
                 switch (c.FormattedValue.ToString())
                 {
+                    case "Unseen":
+                        r.LogisticStateUpdated = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                        MySqlCommand mySqlCommand = new MySqlCommand($"UPDATE `items` set `LogisticStateUpdated` = now() WHERE `ID` = {r.IDValue};", Form1.MasterConnection);
+                        mySqlCommand.ExecuteNonQuery();
+                        break;
                     case "Arrived":
                         r.LastCheckInValue = r.LogisticStateUpdated = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
                         r.UpsertCheckInOut(Form1.MasterConnection, true, Form1.LiveCon, true);
