@@ -112,7 +112,7 @@ namespace GamingInventory_V2
             itemResultBindingSource.Clear();
             ItemResult ItemToSelect = new ItemResult();
             GetValidFields(ItemToSelect);
-            query = ItemToSelect.BuildSelectQuery(SelectItemsToUpdate, false, IDSpinner.Enabled, OwnerCombo.Enabled, PlatformCombo.Enabled, SerialText.Enabled, TypeCombo.Enabled, DescriptionText.Enabled, true);
+            query = ItemToSelect.BuildSelectQuery(SelectItemsToUpdate, false, IDSpinner.Enabled, OwnerCombo.Enabled, PlatformCombo.Enabled, SerialText.Enabled, TypeCombo.Enabled, DescriptionText.Enabled);
             if (!query.Equals(string.Empty))
             {
                 SelectItemsToUpdate.CommandText = query;
@@ -120,7 +120,7 @@ namespace GamingInventory_V2
                 ReadItemsToUpdate = SelectItemsToUpdate.ExecuteReader();
                 while (ReadItemsToUpdate.Read() && ReadItemsToUpdate != null)
                 {
-                    itemResultBindingSource.Add(new ItemResult(ReadItemsToUpdate.GetString("Owner"), ReadItemsToUpdate.GetInt32("ID"), ReadItemsToUpdate.GetString("Type"), ReadItemsToUpdate.GetString("Platform"), ReadItemsToUpdate.GetString("Serial"), ReadItemsToUpdate.GetString("Description"), ReadItemsToUpdate.GetString("LastCheckIn"), ReadItemsToUpdate.GetString("LastCheckout"), ReadItemsToUpdate.GetBoolean("Archived"), false));
+                    itemResultBindingSource.Add(new ItemResult(ReadItemsToUpdate.GetString("Owner"), ReadItemsToUpdate.GetInt32("ID"), ReadItemsToUpdate.GetString("Type"), ReadItemsToUpdate.GetString("Platform"), ReadItemsToUpdate.GetString("Serial"), ReadItemsToUpdate.GetString("Description"), ReadItemsToUpdate.GetString("LastCheckIn"), ReadItemsToUpdate.GetString("LastCheckout"), false));
                 }
                 ReadItemsToUpdate.Close();
             }

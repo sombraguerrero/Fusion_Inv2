@@ -44,19 +44,10 @@
             this.DescriptionCheck = new System.Windows.Forms.CheckBox();
             this.findItems_btn = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.itemResultBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.updateItemsClose_btn = new System.Windows.Forms.Button();
             this.submitItemUpdates_btn = new System.Windows.Forms.Button();
             this.updateResults_label = new System.Windows.Forms.Label();
-            this.ownerValueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.iDValueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.typeValueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.platformValueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.serialValueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.descriptionValueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.lastCheckInValueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.lastCheckOutValueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.archivedValueDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.itemResultBindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.IDSpinner)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.itemResultBindingSource)).BeginInit();
@@ -218,27 +209,11 @@
             this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.AllowUserToOrderColumns = true;
             this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.dataGridView1.AutoGenerateColumns = false;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.ownerValueDataGridViewTextBoxColumn,
-            this.iDValueDataGridViewTextBoxColumn,
-            this.typeValueDataGridViewTextBoxColumn,
-            this.platformValueDataGridViewTextBoxColumn,
-            this.serialValueDataGridViewTextBoxColumn,
-            this.descriptionValueDataGridViewTextBoxColumn,
-            this.lastCheckInValueDataGridViewTextBoxColumn,
-            this.lastCheckOutValueDataGridViewTextBoxColumn,
-            this.archivedValueDataGridViewCheckBoxColumn});
-            this.dataGridView1.DataSource = this.itemResultBindingSource;
             this.dataGridView1.Location = new System.Drawing.Point(36, 79);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(1047, 309);
             this.dataGridView1.TabIndex = 13;
             this.dataGridView1.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellValueChanged);
-            // 
-            // itemResultBindingSource
-            // 
-            this.itemResultBindingSource.DataSource = typeof(GamingInventory_V2.ItemResult);
             // 
             // updateItemsClose_btn
             // 
@@ -273,73 +248,9 @@
             this.updateResults_label.Text = "0 Items Updated Successfully";
             this.updateResults_label.Visible = false;
             // 
-            // ownerValueDataGridViewTextBoxColumn
+            // itemResultBindingSource
             // 
-            this.ownerValueDataGridViewTextBoxColumn.DataPropertyName = "OwnerValue";
-            this.ownerValueDataGridViewTextBoxColumn.HeaderText = "Owner";
-            this.ownerValueDataGridViewTextBoxColumn.Name = "ownerValueDataGridViewTextBoxColumn";
-            this.ownerValueDataGridViewTextBoxColumn.ReadOnly = true;
-            this.ownerValueDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.ownerValueDataGridViewTextBoxColumn.Width = 112;
-            // 
-            // iDValueDataGridViewTextBoxColumn
-            // 
-            this.iDValueDataGridViewTextBoxColumn.DataPropertyName = "IDValue";
-            this.iDValueDataGridViewTextBoxColumn.HeaderText = "ID";
-            this.iDValueDataGridViewTextBoxColumn.Name = "iDValueDataGridViewTextBoxColumn";
-            this.iDValueDataGridViewTextBoxColumn.ReadOnly = true;
-            this.iDValueDataGridViewTextBoxColumn.Width = 111;
-            // 
-            // typeValueDataGridViewTextBoxColumn
-            // 
-            this.typeValueDataGridViewTextBoxColumn.DataPropertyName = "TypeValue";
-            this.typeValueDataGridViewTextBoxColumn.HeaderText = "Type";
-            this.typeValueDataGridViewTextBoxColumn.Name = "typeValueDataGridViewTextBoxColumn";
-            this.typeValueDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.typeValueDataGridViewTextBoxColumn.Width = 112;
-            // 
-            // platformValueDataGridViewTextBoxColumn
-            // 
-            this.platformValueDataGridViewTextBoxColumn.DataPropertyName = "PlatformValue";
-            this.platformValueDataGridViewTextBoxColumn.HeaderText = "Platform";
-            this.platformValueDataGridViewTextBoxColumn.Name = "platformValueDataGridViewTextBoxColumn";
-            this.platformValueDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.platformValueDataGridViewTextBoxColumn.Width = 111;
-            // 
-            // serialValueDataGridViewTextBoxColumn
-            // 
-            this.serialValueDataGridViewTextBoxColumn.DataPropertyName = "SerialValue";
-            this.serialValueDataGridViewTextBoxColumn.HeaderText = "Serial/Title";
-            this.serialValueDataGridViewTextBoxColumn.Name = "serialValueDataGridViewTextBoxColumn";
-            this.serialValueDataGridViewTextBoxColumn.Width = 112;
-            // 
-            // descriptionValueDataGridViewTextBoxColumn
-            // 
-            this.descriptionValueDataGridViewTextBoxColumn.DataPropertyName = "DescriptionValue";
-            this.descriptionValueDataGridViewTextBoxColumn.HeaderText = "Description";
-            this.descriptionValueDataGridViewTextBoxColumn.Name = "descriptionValueDataGridViewTextBoxColumn";
-            this.descriptionValueDataGridViewTextBoxColumn.Width = 111;
-            // 
-            // lastCheckInValueDataGridViewTextBoxColumn
-            // 
-            this.lastCheckInValueDataGridViewTextBoxColumn.DataPropertyName = "LastCheckInValue";
-            this.lastCheckInValueDataGridViewTextBoxColumn.HeaderText = "LastCheckIn";
-            this.lastCheckInValueDataGridViewTextBoxColumn.Name = "lastCheckInValueDataGridViewTextBoxColumn";
-            this.lastCheckInValueDataGridViewTextBoxColumn.Width = 112;
-            // 
-            // lastCheckOutValueDataGridViewTextBoxColumn
-            // 
-            this.lastCheckOutValueDataGridViewTextBoxColumn.DataPropertyName = "LastCheckOutValue";
-            this.lastCheckOutValueDataGridViewTextBoxColumn.HeaderText = "LastCheckOut";
-            this.lastCheckOutValueDataGridViewTextBoxColumn.Name = "lastCheckOutValueDataGridViewTextBoxColumn";
-            this.lastCheckOutValueDataGridViewTextBoxColumn.Width = 111;
-            // 
-            // archivedValueDataGridViewCheckBoxColumn
-            // 
-            this.archivedValueDataGridViewCheckBoxColumn.DataPropertyName = "ArchivedValue";
-            this.archivedValueDataGridViewCheckBoxColumn.HeaderText = "Archived";
-            this.archivedValueDataGridViewCheckBoxColumn.Name = "archivedValueDataGridViewCheckBoxColumn";
-            this.archivedValueDataGridViewCheckBoxColumn.Width = 112;
+            this.itemResultBindingSource.DataSource = typeof(GamingInventory_V2.ItemResult);
             // 
             // UpdateItemsChild
             // 
@@ -394,14 +305,5 @@
         private System.Windows.Forms.Button submitItemUpdates_btn;
         private System.Windows.Forms.Label updateResults_label;
         private System.Windows.Forms.BindingSource itemResultBindingSource;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ownerValueDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn iDValueDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn typeValueDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn platformValueDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn serialValueDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn descriptionValueDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn lastCheckInValueDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn lastCheckOutValueDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn archivedValueDataGridViewCheckBoxColumn;
     }
 }

@@ -43,7 +43,6 @@
             this.OwnerCombo = new System.Windows.Forms.ComboBox();
             this.OwnerCheck = new System.Windows.Forms.CheckBox();
             this.button1 = new System.Windows.Forms.Button();
-            this.archiveCheck = new System.Windows.Forms.CheckBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.searchDS = new System.Data.DataSet();
             this.SelectAllBox = new System.Windows.Forms.CheckBox();
@@ -215,16 +214,6 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // archiveCheck
-            // 
-            this.archiveCheck.AutoSize = true;
-            this.archiveCheck.Location = new System.Drawing.Point(843, 10);
-            this.archiveCheck.Name = "archiveCheck";
-            this.archiveCheck.Size = new System.Drawing.Size(134, 17);
-            this.archiveCheck.TabIndex = 28;
-            this.archiveCheck.Text = "Include Archived Items";
-            this.archiveCheck.UseVisualStyleBackColor = true;
-            // 
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -257,7 +246,6 @@
             this.ClientSize = new System.Drawing.Size(1309, 410);
             this.Controls.Add(this.SelectAllBox);
             this.Controls.Add(this.dataGridView1);
-            this.Controls.Add(this.archiveCheck);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.findItems_btn);
             this.Controls.Add(this.DescriptionCheck);
@@ -299,7 +287,6 @@
         private System.Windows.Forms.ComboBox OwnerCombo;
         private System.Windows.Forms.CheckBox OwnerCheck;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.CheckBox archiveCheck;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Data.DataSet searchDS;
         private System.Windows.Forms.CheckBox SelectAllBox;

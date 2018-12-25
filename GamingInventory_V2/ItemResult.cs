@@ -16,8 +16,9 @@ namespace GamingInventory_V2
         public string DescriptionValue { get; set; }
         public string LastCheckInValue { get; set; }
         public string LastCheckOutValue { get; set; }
-        public bool ArchivedValue { get; set; }
         public bool BindingCheckValue { get; set; }
+        public string LogisticState { get; set; }
+        public string LogisticStateUpdated { get; set; }
 
         public ItemResult()
         {
@@ -29,11 +30,10 @@ namespace GamingInventory_V2
             DescriptionValue = string.Empty;
             LastCheckInValue = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             LastCheckOutValue = "1970-01-01 00:00:00";
-            ArchivedValue = false;
             BindingCheckValue = false;
         }
 
-        public ItemResult(string Owner, decimal ID, string Type, string Platform, string Serial, string Description, string LastCheckIn, string LastCheckOut, bool Archived, bool BindingCheck)
+        public ItemResult(string Owner, decimal ID, string Type, string Platform, string Serial, string Description, string LastCheckIn, string LastCheckOut, string LogisticState, string LogisticStateUpdated)
         {
             OwnerValue = Owner;
             IDValue = ID;
@@ -41,10 +41,8 @@ namespace GamingInventory_V2
             PlatformValue = Platform;
             SerialValue = Serial;
             DescriptionValue = Description;
-            LastCheckInValue = LastCheckIn;
-            LastCheckOutValue = LastCheckOut;
-            ArchivedValue = Archived;
-            BindingCheckValue = BindingCheck;
+            this.LogisticState = LogisticState;
+            this.LogisticStateUpdated = LogisticStateUpdated;
         }
 
         public ItemResult(string Owner, decimal ID, string Type, string Platform, string Serial, string Description, string LastCheckIn)
@@ -57,11 +55,10 @@ namespace GamingInventory_V2
             DescriptionValue = Description;
             LastCheckInValue = LastCheckIn;
             LastCheckOutValue = "1970-01-01 00:00:00";
-            ArchivedValue = false;
             BindingCheckValue = false;
         }
-
-        public ItemResult(string Owner, decimal ID, string Type, string Platform, string Serial, string Description, bool Binding)
+        
+        public ItemResult(string Owner, decimal ID, string Type, string Platform, string Serial, string Description, string LogisticState, string LogisticStateUpdated, bool Binding)
         {
             OwnerValue = Owner;
             IDValue = ID;
@@ -70,7 +67,10 @@ namespace GamingInventory_V2
             SerialValue = Serial;
             DescriptionValue = Description;
             BindingCheckValue = Binding;
+            this.LogisticState = LogisticState;
+            this.LogisticStateUpdated = LogisticStateUpdated;
         }
+        
 
         public ItemResult(string Platform, string Serial, string Description, bool finalCheck)
         {
@@ -107,12 +107,12 @@ namespace GamingInventory_V2
             return Convert.ToDecimal(returnP.Value);
         }
 
-        public string BuildSelectQuery(MySqlCommand cmd, bool needBinding, bool includeID, bool includeOwner, bool includePlatform, bool includeSerial, bool includeType, bool includeDescription, bool includeArchived)
+        public string BuildSelectQuery(MySqlCommand cmd, bool needBinding, bool includeID, bool includeOwner, bool includePlatform, bool includeSerial, bool includeType, bool includeDescription)
         {
             StringBuilder SelectBuilder = new StringBuilder();
 
             if (needBinding)
-                SelectBuilder.Append("select `LastCheckout` < `LastCheckin` as \'Bound\', `Owner`, `ID`, `Type`, `Platform`, `Serial`, `Description`, `LastCheckIn`, `LastCheckOut`, `Archived`  from `gaminginv`.`items` where ");
+                SelectBuilder.Append("select `LastCheckout` < `LastCheckin` as \'Bound\', `Owner`, `ID`, `Type`, `Platform`, `Serial`, `Description`, `LastCheckIn`, `LastCheckOut` from `gaminginv`.`items` where ");
             else
                 SelectBuilder.Append("select * from `gaminginv`.`items` where ");
             List<int> PlaceHolder = new List<int>();
@@ -187,8 +187,6 @@ namespace GamingInventory_V2
                         cmd.Parameters.AddWithValue("@DescriptionParam", '%' + DescriptionValue.ToLower() + '%');
                         break;
                 }
-                if (!includeArchived)
-                    SelectBuilder.Append(" and Archived = false");
                 SelectBuilder.Append(';');
                 return SelectBuilder.ToString();
             }
@@ -250,8 +248,7 @@ namespace GamingInventory_V2
                     cmd.Parameters.AddWithValue("@DescriptionParam", DescriptionValue);
                     break;
             }
-            UpdateBuilder.AppendFormat(",`Archived` = @ArchivedParam where `ID` = @IDParam" + ';');
-            cmd.Parameters.AddWithValue("@ArchivedParam", ArchivedValue);
+            UpdateBuilder.AppendFormat(" where `ID` = @IDParam" + ';');
             cmd.Parameters.AddWithValue("@IDParam", IDValue);
             return UpdateBuilder.ToString();
         }
@@ -265,20 +262,29 @@ namespace GamingInventory_V2
             UpdateItemCmd.ExecuteNonQuery();
         }
 
-        public void UpsertCheckInOut(MySqlConnection conn, bool isCheckIn, bool conLive)
+        public void UpsertCheckInOut(MySqlConnection conn, bool isCheckIn, bool conLive, bool isAudit=false)
         {
             //Write records checkin and checkout records only when con is live
             if (conLive)
             {
 
                 MySqlCommand UpsertCommand = new MySqlCommand();
+                UpsertCommand.Parameters.AddWithValue("@IDParam", IDValue);
                 UpsertCommand.Connection = conn;
+
+                if (isAudit)
+                {
+                    UpsertCommand.CommandText = "UPDATE `gaminginv`.`items` set `LogisticState` = @LogisticStateParam, `LogisticStateUpdated` = @LogisticStateUpdatedParam WHERE `ID` = @IDParam" + ';';
+                    UpsertCommand.Parameters.AddWithValue("@LogisticStateParam", LogisticState);
+                    UpsertCommand.Parameters.AddWithValue("@LogisticStateUpdatedParam", LogisticStateUpdated);
+                    UpsertCommand.ExecuteNonQuery();
+                }
 
                 if (isCheckIn)
                 {
                     UpsertCommand.CommandText = "UPDATE `gaminginv`.`items` SET `LastCheckIn` = @CheckInParam WHERE `ID` = @IDParam" + ';';
                     UpsertCommand.Parameters.AddWithValue("@CheckInParam", LastCheckInValue);
-                    UpsertCommand.Parameters.AddWithValue("@IDParam", IDValue);
+                    
                     UpsertCommand.ExecuteNonQuery();
                     UpsertCommand.CommandText = "INSERT INTO `gaminginv`.`checkinginout` (`Check`, `Direction`, `itemID`, `Duration`) VALUES(@CheckInParam" + ", \'In\'," + "@IDParam" + ", (select abs(timestampdiff(minute, `LastCheckIn`,`LastCheckOut`)) from `items` where `items`.`ID` = @IDParam" + "));";
                     UpsertCommand.ExecuteNonQuery();
@@ -287,7 +293,7 @@ namespace GamingInventory_V2
                 {
                     UpsertCommand.CommandText = "UPDATE `gaminginv`.`items` SET `LastCheckOut` = @CheckOutParam WHERE `ID` = @IDParam" + ';';
                     UpsertCommand.Parameters.AddWithValue("@CheckOutParam", LastCheckOutValue);
-                    UpsertCommand.Parameters.AddWithValue("@IDParam", IDValue);
+                    
                     UpsertCommand.ExecuteNonQuery();
                     UpsertCommand.CommandText = "INSERT INTO `gaminginv`.`checkinginout` (`Check`, `Direction`, `itemID`, `Duration`) VALUES(@CheckOutParam" + ", \'Out\'," + "@IDParam" + ", (select abs(timestampdiff(minute, `LastCheckIn`,`LastCheckOut`)) from `items` where `items`.`ID` = @IDParam" + "));";
                     UpsertCommand.ExecuteNonQuery();
