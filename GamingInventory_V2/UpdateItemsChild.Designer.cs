@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UpdateItemsChild));
             this.OwnerCheck = new System.Windows.Forms.CheckBox();
             this.OwnerCombo = new System.Windows.Forms.ComboBox();
@@ -47,10 +46,10 @@
             this.updateItemsClose_btn = new System.Windows.Forms.Button();
             this.submitItemUpdates_btn = new System.Windows.Forms.Button();
             this.updateResults_label = new System.Windows.Forms.Label();
-            this.itemResultBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.searchDS = new System.Data.DataSet();
             ((System.ComponentModel.ISupportInitialize)(this.IDSpinner)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.itemResultBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.searchDS)).BeginInit();
             this.SuspendLayout();
             // 
             // OwnerCheck
@@ -248,9 +247,9 @@
             this.updateResults_label.Text = "0 Items Updated Successfully";
             this.updateResults_label.Visible = false;
             // 
-            // itemResultBindingSource
+            // searchDS
             // 
-            this.itemResultBindingSource.DataSource = typeof(GamingInventory_V2.ItemResult);
+            this.searchDS.DataSetName = "NewDataSet";
             // 
             // UpdateItemsChild
             // 
@@ -279,7 +278,7 @@
             this.Text = "Update Items";
             ((System.ComponentModel.ISupportInitialize)(this.IDSpinner)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.itemResultBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.searchDS)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -304,6 +303,6 @@
         private System.Windows.Forms.Button updateItemsClose_btn;
         private System.Windows.Forms.Button submitItemUpdates_btn;
         private System.Windows.Forms.Label updateResults_label;
-        private System.Windows.Forms.BindingSource itemResultBindingSource;
+        private System.Data.DataSet searchDS;
     }
 }

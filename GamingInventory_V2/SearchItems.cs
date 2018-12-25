@@ -68,7 +68,7 @@ namespace GamingInventory_V2
             ItemResult ItemToSelect = new ItemResult();
 
             GetValidFields(ItemToSelect);
-            query = ItemToSelect.BuildSelectQuery(QueryItems, true, IDSpinner.Enabled, OwnerCombo.Enabled, PlatformCombo.Enabled, SerialText.Enabled, TypeCombo.Enabled, DescriptionText.Enabled);
+            query = ItemToSelect.BuildSelectQuery(QueryItems, IDSpinner.Enabled, OwnerCombo.Enabled, PlatformCombo.Enabled, SerialText.Enabled, TypeCombo.Enabled, DescriptionText.Enabled);
             if (!query.Equals(string.Empty))
             {
                 QueryItems.CommandText = query;
@@ -296,7 +296,7 @@ namespace GamingInventory_V2
         {
             //ItemChanged = new ItemResult(r["OwnerName"], r["ItemID"], r["ItemType"], r["ItemPlatform"], r["ItemSerial"], r["ItemDescription"], r["LastCheckIn"], r["LastCheckOut"], false, r["isCheckedIn"]);
             DataRow row = searchDS.Tables[0].Rows[r];
-            return new ItemResult(row["Owner"].ToString(), decimal.Parse(row["ID"].ToString()), row["Type"].ToString(), row["Platform"].ToString(), row["Serial"].ToString(), row["Description"].ToString(), row["LastCheckIn"].ToString(), row["LastCheckOut"].ToString(), bool.Parse(row["CheckedIn"].ToString()));
+            return new ItemResult(row["Owner"].ToString(), Convert.ToDecimal(row["ID"]), row["Type"].ToString(), row["Platform"].ToString(), row["Serial"].ToString(), row["Description"].ToString(), row["LastCheckIn"].ToString(), row["LastCheckOut"].ToString(), Convert.ToBoolean(row["CheckedIn"]));
         }
 
         private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)

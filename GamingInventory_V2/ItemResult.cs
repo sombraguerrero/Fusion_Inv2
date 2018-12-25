@@ -70,14 +70,13 @@ namespace GamingInventory_V2
             this.LogisticState = LogisticState;
             this.LogisticStateUpdated = LogisticStateUpdated;
         }
-        
 
-        public ItemResult(string Platform, string Serial, string Description, bool finalCheck)
+        public ItemResult(string Platform, string Serial, string Description, string type)
         {
             PlatformValue = Platform;
             SerialValue = Serial;
             DescriptionValue = Description;
-            BindingCheckValue = finalCheck;
+            TypeValue = type;
         }
 
         public override string ToString() => string.Format("{0} : {1} | In: {2} | Out: {3}", IDValue, OwnerValue, LastCheckInValue, LastCheckOutValue);
@@ -99,14 +98,11 @@ namespace GamingInventory_V2
             return Convert.ToDecimal(returnP.Value);
         }
 
-        public string BuildSelectQuery(MySqlCommand cmd, bool needBinding, bool includeID, bool includeOwner, bool includePlatform, bool includeSerial, bool includeType, bool includeDescription)
+        public string BuildSelectQuery(MySqlCommand cmd, bool includeID, bool includeOwner, bool includePlatform, bool includeSerial, bool includeType, bool includeDescription)
         {
             StringBuilder SelectBuilder = new StringBuilder();
 
-            if (needBinding)
-                SelectBuilder.Append("select `LastCheckout` < `LastCheckin` as \'Bound\', `Owner`, `ID`, `Type`, `Platform`, `Serial`, `Description`, `LastCheckIn`, `LastCheckOut` from `gaminginv`.`items` where ");
-            else
-                SelectBuilder.Append("select * from `gaminginv`.`items` where ");
+            SelectBuilder.Append("select * from `gaminginv`.`items` where ");
             List<int> PlaceHolder = new List<int>();
             if (includeID && IDValue > 0)
                 PlaceHolder.Add(1);
@@ -179,7 +175,7 @@ namespace GamingInventory_V2
                         cmd.Parameters.AddWithValue("@DescriptionParam", '%' + DescriptionValue.ToLower() + '%');
                         break;
                 }
-                SelectBuilder.Append(';');
+                SelectBuilder.Append(" and `LogisticState` = 'Arrived';");
                 return SelectBuilder.ToString();
             }
             else

@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using System.Drawing;
+using System.Data;
 using System.Collections;
 
 namespace GamingInventory_V2
@@ -9,10 +10,13 @@ namespace GamingInventory_V2
     public partial class UpdateItemsChild : Form
     {
         ArrayList dirtyRows;
+        BindingSource binding;
 
         public UpdateItemsChild()
         {
             InitializeComponent();
+            binding = new BindingSource();
+            dataGridView1.DataSource = binding;
             dirtyRows = new ArrayList();
             HScroll = true;
             updateResults_label.ForeColor = Color.Green;
@@ -104,25 +108,23 @@ namespace GamingInventory_V2
 
         private void itemSearch()
         {
+            searchDS.Clear();
             string query;
-            MySqlCommand SelectItemsToUpdate = new MySqlCommand();
-            MySqlDataReader ReadItemsToUpdate = null;
-
-            dirtyRows.Clear();
-            itemResultBindingSource.Clear();
+            MySqlCommand QueryItems = new MySqlCommand();
+            MySqlDataAdapter mySqlDataAdapter = new MySqlDataAdapter();
             ItemResult ItemToSelect = new ItemResult();
+
             GetValidFields(ItemToSelect);
-            query = ItemToSelect.BuildSelectQuery(SelectItemsToUpdate, false, IDSpinner.Enabled, OwnerCombo.Enabled, PlatformCombo.Enabled, SerialText.Enabled, TypeCombo.Enabled, DescriptionText.Enabled);
+            query = ItemToSelect.BuildSelectQuery(QueryItems, IDSpinner.Enabled, OwnerCombo.Enabled, PlatformCombo.Enabled, SerialText.Enabled, TypeCombo.Enabled, DescriptionText.Enabled);
             if (!query.Equals(string.Empty))
             {
-                SelectItemsToUpdate.CommandText = query;
-                SelectItemsToUpdate.Connection = Form1.MasterConnection;
-                ReadItemsToUpdate = SelectItemsToUpdate.ExecuteReader();
-                while (ReadItemsToUpdate.Read() && ReadItemsToUpdate != null)
-                {
-                    itemResultBindingSource.Add(new ItemResult(ReadItemsToUpdate.GetString("Owner"), ReadItemsToUpdate.GetInt32("ID"), ReadItemsToUpdate.GetString("Type"), ReadItemsToUpdate.GetString("Platform"), ReadItemsToUpdate.GetString("Serial"), ReadItemsToUpdate.GetString("Description"), ReadItemsToUpdate.GetString("LastCheckIn"), ReadItemsToUpdate.GetString("LastCheckout"), false));
-                }
-                ReadItemsToUpdate.Close();
+                QueryItems.CommandText = query;
+                QueryItems.Connection = Form1.MasterConnection;
+                mySqlDataAdapter.SelectCommand = QueryItems;
+                mySqlDataAdapter.Fill(searchDS);
+                if (searchDS.Tables[0].Columns["CheckedIn"] == null)
+                    searchDS.Tables[0].Columns.Add("CheckedIn", Type.GetType("System.Boolean"));
+                binding.DataSource = searchDS.Tables[0];
             }
         }
 
@@ -142,7 +144,7 @@ namespace GamingInventory_V2
             ItemResult UpdateItem;
             foreach (int r in dirtyRows)
             {
-                UpdateItem = itemResultBindingSource[r] as ItemResult;
+                UpdateItem = GenerateItemResult(r);
                 if (UpdateItem.DescriptionValue == null)
                     UpdateItem.DescriptionValue = string.Empty;
                 else if (UpdateItem.SerialValue == null)
@@ -153,6 +155,13 @@ namespace GamingInventory_V2
             updateResults_label.Text = count + " items updated successfully!";
             updateResults_label.Show();
             dirtyRows.Clear();
+        }
+
+        private ItemResult GenerateItemResult(int r)
+        {
+            //ItemChanged = new ItemResult(r["OwnerName"], r["ItemID"], r["ItemType"], r["ItemPlatform"], r["ItemSerial"], r["ItemDescription"], r["LastCheckIn"], r["LastCheckOut"], false, r["isCheckedIn"]);
+            DataRow row = searchDS.Tables[0].Rows[r];
+            return new ItemResult(row["Platform"].ToString(), row["Serial"].ToString(), row["Description"].ToString(), row["Type"].ToString());
         }
 
         private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
