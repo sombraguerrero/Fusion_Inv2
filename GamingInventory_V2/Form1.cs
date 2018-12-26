@@ -40,7 +40,7 @@ namespace GamingInventory_V2
                     LiveCon = true;
                 }
             }
-            catch (MySql.Data.MySqlClient.MySqlException ex)
+            catch (MySqlException ex)
             {
                 MessageBox.Show(string.Format("Error Code: {0}; Source {1}; Message: {2}", ex.ErrorCode, ex.Source, ex.Message));
             }
@@ -202,10 +202,13 @@ namespace GamingInventory_V2
             MySqlCommand mySqlCommand = new MySqlCommand();
             mySqlCommand.Connection = MasterConnection;
             string s = Microsoft.VisualBasic.Interaction.InputBox("Platform to add (multiples separated with commas):", "Add a Platform");
-            s = s.Insert(0, ",");
-            mySqlCommand.CommandText = "UPDATE configs set Platforms = concat(Platforms, @added_platform);";
-            mySqlCommand.Parameters.AddWithValue("@added_platform", s);
-            mySqlCommand.ExecuteNonQuery();
+            if (!s.Equals(string.Empty))
+            {
+                s = s.Insert(0, ",");
+                mySqlCommand.CommandText = "UPDATE configs set Platforms = concat(Platforms, @added_platform);";
+                mySqlCommand.Parameters.AddWithValue("@added_platform", s);
+                mySqlCommand.ExecuteNonQuery();
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)

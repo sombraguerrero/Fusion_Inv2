@@ -38,7 +38,7 @@ namespace GamingInventory_V2
         {
             InitializeComponent();
             dataGridView1.DataSource = bindingSource1;
-            MySqlCommand SelectGamesByPlatformCmd = new MySqlCommand("SELECT `PLATFORM`, `SERIAL`, `DESCRIPTION`, (`LastCheckOut` < `LastCheckIn`) as \'Bound\'  FROM `ITEMS` WHERE `TYPE` = \'GAME\' ORDER BY `PLATFORM`;", Form1.MasterConnection);
+            MySqlCommand SelectGamesByPlatformCmd = new MySqlCommand("SELECT `PLATFORM`, `SERIAL`, `DESCRIPTION` FROM `ITEMS` WHERE `TYPE` = \'GAME\' ORDER BY `PLATFORM`;", Form1.MasterConnection);
             MySqlDataAdapter ReadGames = new MySqlDataAdapter(SelectGamesByPlatformCmd);
             ReadGames.Fill(gamesDS);
             bindingSource1.DataSource = gamesDS.Tables[0];
