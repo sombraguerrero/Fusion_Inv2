@@ -263,12 +263,9 @@ namespace GamingInventory_V2
                 UpsertAllCmd.CommandText = BuildSelectAllUpdateQuery(true);
                 UpsertAllCmd.ExecuteNonQuery();
 
-                //Write checkin and checkout records only when con is live
-                if (Form1.LiveCon)
-                {
-                    UpsertAllCmd.CommandText = BuildSelectAllInserteQuery(true);
-                    UpsertAllCmd.ExecuteNonQuery();
-                }
+                //Write checkin and checkout records
+                UpsertAllCmd.CommandText = BuildSelectAllInserteQuery(true);
+                UpsertAllCmd.ExecuteNonQuery();
             }
             else
             {
@@ -282,12 +279,9 @@ namespace GamingInventory_V2
                 UpsertAllCmd.CommandText = BuildSelectAllUpdateQuery(false);
                 UpsertAllCmd.ExecuteNonQuery();
 
-                //Write checkin and checkout records only when con is live
-                if (Form1.LiveCon)
-                {
-                    UpsertAllCmd.CommandText = BuildSelectAllInserteQuery(false);
-                    UpsertAllCmd.ExecuteNonQuery();
-                }
+                //Write checkin and checkout records
+                UpsertAllCmd.CommandText = BuildSelectAllInserteQuery(false);
+                UpsertAllCmd.ExecuteNonQuery();
             }
             RaiseValueChanged = true;
         }
@@ -314,7 +308,7 @@ namespace GamingInventory_V2
                     {
                         ItemChanged.LastCheckInValue = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
                         (dataGridView1["LastCheckIn", e.RowIndex] as DataGridViewTextBoxCell).Value = ItemChanged.LastCheckInValue;
-                        ItemChanged.UpsertCheckInOut(Form1.MasterConnection, true, Form1.LiveCon);
+                        ItemChanged.UpsertCheckInOut(Form1.MasterConnection, true);
                         dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = System.Drawing.Color.LightGreen;
                         //Cursor.Current = Cursors.WaitCursor;
                     }
@@ -322,7 +316,7 @@ namespace GamingInventory_V2
                     {
                         ItemChanged.LastCheckOutValue = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
                         (dataGridView1["LastCheckOut", e.RowIndex] as DataGridViewTextBoxCell).Value = ItemChanged.LastCheckOutValue;
-                        ItemChanged.UpsertCheckInOut(Form1.MasterConnection, false, Form1.LiveCon);
+                        ItemChanged.UpsertCheckInOut(Form1.MasterConnection, false);
                         dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = System.Drawing.Color.LightPink;
                         //Cursor.Current = Cursors.WaitCursor;
                     }

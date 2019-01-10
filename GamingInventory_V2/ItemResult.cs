@@ -250,29 +250,42 @@ namespace GamingInventory_V2
             UpdateItemCmd.ExecuteNonQuery();
         }
 
-        public void UpsertCheckInOut(MySqlConnection conn, bool isCheckIn, bool conLive, bool isAudit=false)
+        public void UpsertCheckInOut(MySqlConnection conn, bool isCheckIn, bool isAudit = false)
         {
-            //Write records checkin and checkout records only when con is live
-            if (conLive)
+            MySqlCommand UpsertCommand = new MySqlCommand();
+            UpsertCommand.Parameters.AddWithValue("@IDParam", IDValue);
+            UpsertCommand.Connection = conn;
+            if (isAudit)
             {
-
-                MySqlCommand UpsertCommand = new MySqlCommand();
-                UpsertCommand.Parameters.AddWithValue("@IDParam", IDValue);
-                UpsertCommand.Connection = conn;
-
-                if (isAudit)
-                {
-                    UpsertCommand.CommandText = "UPDATE `gaminginv`.`items` set `LogisticState` = @LogisticStateParam, `LogisticStateUpdated` = @LogisticStateUpdatedParam WHERE `ID` = @IDParam" + ';';
-                    UpsertCommand.Parameters.AddWithValue("@LogisticStateParam", LogisticState);
-                    UpsertCommand.Parameters.AddWithValue("@LogisticStateUpdatedParam", LogisticStateUpdated);
-                    UpsertCommand.ExecuteNonQuery();
-                }
+                UpsertCommand.CommandText = "UPDATE `gaminginv`.`items` set `LogisticState` = @LogisticStateParam, `LogisticStateUpdated` = @LogisticStateUpdatedParam WHERE `ID` = @IDParam" + ';';
+                UpsertCommand.Parameters.AddWithValue("@LogisticStateParam", LogisticState);
+                UpsertCommand.Parameters.AddWithValue("@LogisticStateUpdatedParam", LogisticStateUpdated);
+                UpsertCommand.ExecuteNonQuery();
 
                 if (isCheckIn)
                 {
                     UpsertCommand.CommandText = "UPDATE `gaminginv`.`items` SET `LastCheckIn` = @CheckInParam WHERE `ID` = @IDParam" + ';';
                     UpsertCommand.Parameters.AddWithValue("@CheckInParam", LastCheckInValue);
-                    
+                    UpsertCommand.ExecuteNonQuery();
+                    UpsertCommand.CommandText = "INSERT INTO `gaminginv`.`checkinginout` (`Check`, `Direction`, `itemID`, `Duration`) VALUES(@CheckInParam" + ", @LogisticStateParam," + "@IDParam" + ", (select abs(timestampdiff(minute, `LastCheckIn`,`LastCheckOut`)) from `items` where `items`.`ID` = @IDParam" + "));";
+                    UpsertCommand.ExecuteNonQuery();
+                }
+                else
+                {
+                    UpsertCommand.CommandText = "UPDATE `gaminginv`.`items` SET `LastCheckOut` = @CheckOutParam WHERE `ID` = @IDParam" + ';';
+                    UpsertCommand.Parameters.AddWithValue("@CheckOutParam", LastCheckOutValue);
+                    UpsertCommand.ExecuteNonQuery();
+                    UpsertCommand.CommandText = "INSERT INTO `gaminginv`.`checkinginout` (`Check`, `Direction`, `itemID`, `Duration`) VALUES(@CheckOutParam" + ", @LogisticStateParam," + "@IDParam" + ", (select abs(timestampdiff(minute, `LastCheckIn`,`LastCheckOut`)) from `items` where `items`.`ID` = @IDParam" + "));";
+                    UpsertCommand.ExecuteNonQuery();
+                }
+            }
+
+            else
+            {
+                if (isCheckIn)
+                {
+                    UpsertCommand.CommandText = "UPDATE `gaminginv`.`items` SET `LastCheckIn` = @CheckInParam WHERE `ID` = @IDParam" + ';';
+                    UpsertCommand.Parameters.AddWithValue("@CheckInParam", LastCheckInValue);
                     UpsertCommand.ExecuteNonQuery();
                     UpsertCommand.CommandText = "INSERT INTO `gaminginv`.`checkinginout` (`Check`, `Direction`, `itemID`, `Duration`) VALUES(@CheckInParam" + ", \'In\'," + "@IDParam" + ", (select abs(timestampdiff(minute, `LastCheckIn`,`LastCheckOut`)) from `items` where `items`.`ID` = @IDParam" + "));";
                     UpsertCommand.ExecuteNonQuery();
@@ -281,7 +294,6 @@ namespace GamingInventory_V2
                 {
                     UpsertCommand.CommandText = "UPDATE `gaminginv`.`items` SET `LastCheckOut` = @CheckOutParam WHERE `ID` = @IDParam" + ';';
                     UpsertCommand.Parameters.AddWithValue("@CheckOutParam", LastCheckOutValue);
-                    
                     UpsertCommand.ExecuteNonQuery();
                     UpsertCommand.CommandText = "INSERT INTO `gaminginv`.`checkinginout` (`Check`, `Direction`, `itemID`, `Duration`) VALUES(@CheckOutParam" + ", \'Out\'," + "@IDParam" + ", (select abs(timestampdiff(minute, `LastCheckIn`,`LastCheckOut`)) from `items` where `items`.`ID` = @IDParam" + "));";
                     UpsertCommand.ExecuteNonQuery();

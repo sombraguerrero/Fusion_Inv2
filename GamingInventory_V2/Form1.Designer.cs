@@ -42,7 +42,6 @@
             this.searchOwner_btn = new System.Windows.Forms.Button();
             this.searchItems_btn = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.itemsAudit_btn = new System.Windows.Forms.Button();
             this.gamesByPlatform_btn = new System.Windows.Forms.Button();
             this.UsageRpt_btn = new System.Windows.Forms.Button();
@@ -193,43 +192,31 @@
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.checkBox1);
             this.groupBox3.Controls.Add(this.itemsAudit_btn);
             this.groupBox3.Controls.Add(this.gamesByPlatform_btn);
             this.groupBox3.Controls.Add(this.UsageRpt_btn);
             this.groupBox3.Location = new System.Drawing.Point(18, 284);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(439, 92);
+            this.groupBox3.Size = new System.Drawing.Size(439, 80);
             this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Reporting";
             // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(6, 19);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(120, 17);
-            this.checkBox1.TabIndex = 4;
-            this.checkBox1.Text = "Record Timestamps";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            this.checkBox1.Click += new System.EventHandler(this.checkBox1_Click);
-            // 
             // itemsAudit_btn
             // 
             this.itemsAudit_btn.Font = new System.Drawing.Font("Arial Black", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.itemsAudit_btn.Location = new System.Drawing.Point(6, 37);
+            this.itemsAudit_btn.Location = new System.Drawing.Point(6, 19);
             this.itemsAudit_btn.Name = "itemsAudit_btn";
             this.itemsAudit_btn.Size = new System.Drawing.Size(122, 49);
             this.itemsAudit_btn.TabIndex = 2;
-            this.itemsAudit_btn.Text = "Load-In/Load-Out";
+            this.itemsAudit_btn.Text = "Load-In/Out";
             this.itemsAudit_btn.UseVisualStyleBackColor = true;
             this.itemsAudit_btn.Click += new System.EventHandler(this.itemsAudit_btn_Click);
             // 
             // gamesByPlatform_btn
             // 
             this.gamesByPlatform_btn.Font = new System.Drawing.Font("Arial Black", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.gamesByPlatform_btn.Location = new System.Drawing.Point(134, 37);
+            this.gamesByPlatform_btn.Location = new System.Drawing.Point(134, 19);
             this.gamesByPlatform_btn.Name = "gamesByPlatform_btn";
             this.gamesByPlatform_btn.Size = new System.Drawing.Size(172, 49);
             this.gamesByPlatform_btn.TabIndex = 1;
@@ -240,11 +227,11 @@
             // UsageRpt_btn
             // 
             this.UsageRpt_btn.Font = new System.Drawing.Font("Arial Black", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.UsageRpt_btn.Location = new System.Drawing.Point(312, 37);
+            this.UsageRpt_btn.Location = new System.Drawing.Point(312, 19);
             this.UsageRpt_btn.Name = "UsageRpt_btn";
             this.UsageRpt_btn.Size = new System.Drawing.Size(121, 49);
             this.UsageRpt_btn.TabIndex = 0;
-            this.UsageRpt_btn.Text = "Item Usage";
+            this.UsageRpt_btn.Text = "Logistics Summary";
             this.UsageRpt_btn.UseVisualStyleBackColor = true;
             this.UsageRpt_btn.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -276,7 +263,6 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -299,7 +285,6 @@
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.Button importBtn;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
-        private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button importCSVbtn;
     }

@@ -8,7 +8,6 @@ namespace GamingInventory_V2
 {
     public partial class Form1 : Form
     {
-        public static bool LiveCon { get; private set; } = false;
         public static MySqlConnection MasterConnection { get; } = new MySqlConnection();
 
         public Form1()
@@ -25,19 +24,12 @@ namespace GamingInventory_V2
             try
             {
                 MasterConnection.Open();
-                MySqlCommand initFlag = new MySqlCommand("select con_live from configs", MasterConnection);
+                MySqlCommand initFlag = new MySqlCommand("select count(*) from configs", MasterConnection);
                 object o = initFlag.ExecuteScalar();
-                if (o == null)
+                if (o == null || (long)o == 0)
                 {
-                    initFlag.CommandText = "insert into configs (con_live) values (0);";
+                    initFlag.CommandText = "insert into configs values ();";
                     initFlag.ExecuteNonQuery();
-                    initFlag.CommandText = "select con_live from configs";
-                }
-                ulong initialFlag = (ulong)initFlag.ExecuteScalar();
-                if (initialFlag == 1)
-                {
-                    checkBox1.Checked = true;
-                    LiveCon = true;
                 }
             }
             catch (MySqlException ex)
@@ -178,23 +170,6 @@ namespace GamingInventory_V2
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             MasterConnection.Close();
-        }
-
-        private void checkBox1_Click(object sender, EventArgs e)
-        {
-            MySqlCommand mySqlCommand = new MySqlCommand();
-            mySqlCommand.Connection = Form1.MasterConnection;
-            if (checkBox1.CheckState == CheckState.Unchecked)
-            {
-                mySqlCommand.CommandText = "update configs set con_live = 0,con_end = now();";
-                LiveCon = false;
-            }
-            else
-            {
-                mySqlCommand.CommandText = "update configs set con_live = 1,con_start = now();";
-                LiveCon = true;
-            }
-            mySqlCommand.ExecuteNonQuery();
         }
 
         private void button1_Click_2(object sender, EventArgs e)
