@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using System.Configuration;
 using MySql.Data.MySqlClient;
+using System.Reflection;
 
 namespace GamingInventory_V2
 {
@@ -13,6 +14,8 @@ namespace GamingInventory_V2
         public Form1()
         {
             InitializeComponent();
+            Version version = Assembly.GetExecutingAssembly().GetName().Version;
+            Text += $"{version.Major}.{version.Minor}.{version.Build}.{version.Revision}";
             EncryptConnectionString();
 
             MasterConnection.ConnectionString = ConfigurationManager.ConnectionStrings["Fusion_Secure"].ConnectionString;
