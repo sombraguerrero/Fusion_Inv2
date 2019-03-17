@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Diagnostics;
-using System.Configuration;
 using MySql.Data.MySqlClient;
 using System.Reflection;
+using System.Security.Cryptography;
+using System.IO;
 
 namespace GamingInventory_V2
 {
@@ -14,11 +15,11 @@ namespace GamingInventory_V2
         public Form1()
         {
             InitializeComponent();
+            //EncryptConnectionString();
             Version version = Assembly.GetExecutingAssembly().GetName().Version;
             Text += $"{version.Major}.{version.Minor}.{version.Build}.{version.Revision}";
-            EncryptConnectionString();
 
-            MasterConnection.ConnectionString = ConfigurationManager.ConnectionStrings["Fusion_Secure"].ConnectionString;
+            MasterConnection.ConnectionString = DecryptConnectionString();
             if (!MasterConnection.ConnectionString.Contains("localhost"))
             {
                 exportBtn.Enabled = false;
@@ -41,6 +42,62 @@ namespace GamingInventory_V2
             }
         }
 
+        static string DecryptConnectionString()
+        {
+            byte[] encConnString = File.ReadAllBytes(@"enc\conn.dat");
+            using (Aes FusionAES = Aes.Create())
+            {
+                FusionAES.Key = File.ReadAllBytes(@"enc\key.dat");
+                FusionAES.IV = File.ReadAllBytes(@"enc\iv.dat");
+                return DecryptStringFromBytes_Aes(encConnString, FusionAES.Key, FusionAES.IV);
+            }
+        }
+
+        static string DecryptStringFromBytes_Aes(byte[] cipherText, byte[] Key, byte[] IV)
+        {
+            // Check arguments.
+            if (cipherText == null || cipherText.Length <= 0)
+                throw new ArgumentNullException("cipherText");
+            if (Key == null || Key.Length <= 0)
+                throw new ArgumentNullException("Key");
+            if (IV == null || IV.Length <= 0)
+                throw new ArgumentNullException("IV");
+
+            // Declare the string used to hold
+            // the decrypted text.
+            string plaintext = null;
+
+            // Create an Aes object
+            // with the specified key and IV.
+            using (Aes aesAlg = Aes.Create())
+            {
+                aesAlg.Key = Key;
+                aesAlg.IV = IV;
+
+                // Create a decryptor to perform the stream transform.
+                ICryptoTransform decryptor = aesAlg.CreateDecryptor(aesAlg.Key, aesAlg.IV);
+
+                // Create the streams used for decryption.
+                using (MemoryStream msDecrypt = new MemoryStream(cipherText))
+                {
+                    using (CryptoStream csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
+                    {
+                        using (StreamReader srDecrypt = new StreamReader(csDecrypt))
+                        {
+
+                            // Read the decrypted bytes from the decrypting stream
+                            // and place them in a string.
+                            plaintext = srDecrypt.ReadToEnd();
+                        }
+                    }
+                }
+
+            }
+
+            return plaintext;
+
+        }
+        /***
         private void EncryptConnectionString()
         {
             Configuration configuration = null;
@@ -66,9 +123,10 @@ namespace GamingInventory_V2
             }
             catch (Exception ex)
             {
-                Console.Error.WriteLine(ex.ToString());
+                MessageBox.Show(ex.InnerException.Message, "Error");
             }
         }
+        ***/
 
         private void addOwner_btn_Click(object sender, EventArgs e)
         {

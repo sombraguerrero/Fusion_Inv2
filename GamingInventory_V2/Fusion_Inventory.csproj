@@ -197,6 +197,15 @@
     <EmbeddedResource Include="UpdateOwner.resx">
       <DependentUpon>UpdateOwner.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="enc\conn.dat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="enc\iv.dat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="enc\key.dat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\DataSources\ItemResult.datasource" />
     <None Include="Properties\Settings.settings">
