@@ -37,15 +37,7 @@ namespace GamingInventory_V2
 
                 sheetRowPosition++;
             }
-            usageSheet.Columns[1].AutoFit();
-            usageSheet.Columns[2].AutoFit();
-            usageSheet.Columns[3].AutoFit();
-            usageSheet.Columns[4].AutoFit();
-            usageSheet.Columns[5].AutoFit();
-            usageSheet.Columns[6].AutoFit();
-            usageSheet.Columns[7].AutoFit();
-            usageSheet.Columns[8].AutoFit();
-            usageSheet.Columns[9].AutoFit();
+            usageSheet.Columns.AutoFit();
             usageExcelApp.ActiveWorkbook.SaveAs(Environment.GetEnvironmentVariable("userprofile") + "\\Desktop\\UsageReport");
             usageExcelApp.ActiveWorkbook.Close();
             MessageBox.Show("Saved to " + Environment.GetEnvironmentVariable("userprofile") + "\\Desktop\\UsageReport");

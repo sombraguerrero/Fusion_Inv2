@@ -26,9 +26,7 @@ namespace GamingInventory_V2
                 gamesSheet.Cells[sheetRowPosition, "C"] = result["Description"];
                 sheetRowPosition++;
             }
-            gamesSheet.Columns[1].AutoFit();
-            gamesSheet.Columns[2].AutoFit();
-            gamesSheet.Columns[3].AutoFit();
+            gamesSheet.Columns.AutoFit();
             gamesExcelApp.ActiveWorkbook.SaveAs(Environment.GetEnvironmentVariable("userprofile") + "\\Desktop\\GamesList");
             gamesExcelApp.ActiveWorkbook.Close();
             MessageBox.Show("Saved to " + Environment.GetEnvironmentVariable("userprofile") + "\\Desktop\\GamesList");

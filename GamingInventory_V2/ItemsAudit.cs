@@ -50,14 +50,7 @@ namespace GamingInventory_V2
                 auditSheet.Cells[sheetRowPosition, "H"] = result.LogisticStateUpdated;
                 sheetRowPosition++;
             }
-            auditSheet.Columns[1].AutoFit();
-            auditSheet.Columns[2].AutoFit();
-            auditSheet.Columns[3].AutoFit();
-            auditSheet.Columns[4].AutoFit();
-            auditSheet.Columns[5].AutoFit();
-            auditSheet.Columns[6].AutoFit();
-            auditSheet.Columns[7].AutoFit();
-            auditSheet.Columns[8].AutoFit();
+            auditSheet.Columns.AutoFit();
             auditExcelApp.ActiveWorkbook.SaveAs(Environment.GetEnvironmentVariable("userprofile") + "\\Desktop\\AuditReport");
             auditExcelApp.ActiveWorkbook.Close();
             MessageBox.Show("Saved to " + Environment.GetEnvironmentVariable("userprofile") + "\\Desktop\\AuditReport");
