@@ -94,7 +94,7 @@ namespace GamingInventory_V2
                 //MessageBox.Show(item["LastCheckOut"].ToString());
                 cin = DateTime.Parse(item["LastCheckIn"].ToString());
                 cout = DateTime.Parse(item["LastCheckOut"].ToString());
-                item["CheckedIn"] = cin > cout;
+                item["CheckedIn"] = cin >= cout;
             }
         }
 

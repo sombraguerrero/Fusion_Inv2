@@ -233,7 +233,7 @@
       <Version>15.0.4795.1000</Version>
     </PackageReference>
     <PackageReference Include="MySql.Data">
-      <Version>8.0.16</Version>
+      <Version>8.0.18</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -102,15 +102,15 @@ namespace GamingInventory_V2
             GetOwnerInfo.CommandText = "SELECT ID FROM `OWNER` WHERE `NAME` = @NameParam";
             //object testObject = GetOwnerInfo.ExecuteScalar();
             initOwnerID = (uint)GetOwnerInfo.ExecuteScalar();
-            GetOwnerInfo.CommandText = $"SELECT COALESCE(MAX(ID), {initOwnerID + QtyMin[0]}) FROM ITEMS WHERE `OWNER` = @NameParam AND `Type` = 'Console'";
+            GetOwnerInfo.CommandText = $"SELECT COALESCE(MAX(ID) + 1, {initOwnerID + QtyMin[0]}) FROM ITEMS WHERE `OWNER` = @NameParam AND `Type` = 'Console'";
             maxIDs.Add((decimal)GetOwnerInfo.ExecuteScalar());
-            GetOwnerInfo.CommandText = $"SELECT COALESCE(MAX(ID), {initOwnerID + QtyMin[1]}) FROM ITEMS WHERE `OWNER` = @NameParam AND `Type` = 'Controller'";
+            GetOwnerInfo.CommandText = $"SELECT COALESCE(MAX(ID) + 1, {initOwnerID + QtyMin[1]}) FROM ITEMS WHERE `OWNER` = @NameParam AND `Type` = 'Controller'";
             maxIDs.Add((decimal)GetOwnerInfo.ExecuteScalar());
-            GetOwnerInfo.CommandText = $"SELECT COALESCE(MAX(ID), {initOwnerID + QtyMin[2]}) FROM ITEMS WHERE `OWNER` = @NameParam AND `Type` = 'Peripheral'";
+            GetOwnerInfo.CommandText = $"SELECT COALESCE(MAX(ID) + 1, {initOwnerID + QtyMin[2]}) FROM ITEMS WHERE `OWNER` = @NameParam AND `Type` = 'Peripheral'";
             maxIDs.Add((decimal)GetOwnerInfo.ExecuteScalar());
-            GetOwnerInfo.CommandText = $"SELECT COALESCE(MAX(ID), {initOwnerID + QtyMin[3]}) FROM ITEMS WHERE `OWNER` = @NameParam AND `Type` = 'Cable'";
+            GetOwnerInfo.CommandText = $"SELECT COALESCE(MAX(ID) + 1, {initOwnerID + QtyMin[3]}) FROM ITEMS WHERE `OWNER` = @NameParam AND `Type` = 'Cable'";
             maxIDs.Add((decimal)GetOwnerInfo.ExecuteScalar());
-            GetOwnerInfo.CommandText = $"SELECT COALESCE(MAX(ID), {initOwnerID + QtyMin[4]}) FROM ITEMS WHERE `OWNER` = @NameParam AND `Type` = 'Game'";
+            GetOwnerInfo.CommandText = $"SELECT COALESCE(MAX(ID) + 1, {initOwnerID + QtyMin[4]}) FROM ITEMS WHERE `OWNER` = @NameParam AND `Type` = 'Game'";
             maxIDs.Add((decimal)GetOwnerInfo.ExecuteScalar());
         }
 
