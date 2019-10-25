@@ -11,16 +11,6 @@ namespace GamingInventory_V2
         public ItemsAudit()
         {
             InitializeComponent();
-
-            //MySqlCommand SelectItemsCmd = new MySqlCommand("SELECT `ID`, `OWNER`, `TYPE`, `PLATFORM`, `SERIAL`, `DESCRIPTION`, (`LASTCHECKIN` > `LASTCHECKOUT`) AS \'BOUND\' FROM `ITEMS` ORDER BY `ID`;", Form1.MasterConnection);
-            MySqlCommand SelectItemsCmd = new MySqlCommand("SELECT `ID`, `OWNER`, `TYPE`, `PLATFORM`, `SERIAL`, `DESCRIPTION`, `LastCheckIn`, `LastCheckOut`, `LogisticState`, `LogisticStateUpdated`, true AS \'BOUND\' FROM `ITEMS` ORDER BY `ID`;", Form1.MasterConnection);
-            MySqlDataReader ItemsReader = SelectItemsCmd.ExecuteReader();
-            while (ItemsReader.Read())
-            {
-                itemResultBindingSource.Add(new ItemResult(ItemsReader.GetString("Owner"), ItemsReader.GetDecimal("ID"), ItemsReader.GetString("Type"), ItemsReader.GetString("Platform"), ItemsReader.GetString("Serial"), ItemsReader.GetString("Description"), ItemsReader.GetString("LastCheckIn"), ItemsReader.GetString("LastCheckOut"), ItemsReader.GetString("LogisticState"), ItemsReader.GetMySqlDateTime("LogisticStateUpdated").ToString()));
-            }
-            ItemsReader.Close();
-            dataGridView1.DefaultCellStyle.BackColor = Color.LightGreen;
         }
 
         private void showAuditSpreadSheet()
@@ -100,6 +90,28 @@ namespace GamingInventory_V2
         private void button1_Click(object sender, EventArgs e)
         {
             showAuditSpreadSheet();
+        }
+
+        private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder("(");
+            itemResultBindingSource.Clear();
+            foreach (string item in checkedListBox1.CheckedItems)
+            {
+                stringBuilder.Append($"'{item}',");
+            }
+            stringBuilder.Remove(stringBuilder.Length - 1, 1);
+            stringBuilder.Append(')');
+;            //MySqlCommand SelectItemsCmd = new MySqlCommand("SELECT `ID`, `OWNER`, `TYPE`, `PLATFORM`, `SERIAL`, `DESCRIPTION`, (`LASTCHECKIN` > `LASTCHECKOUT`) AS \'BOUND\' FROM `ITEMS` ORDER BY `ID`;", Form1.MasterConnection);
+            MySqlCommand SelectItemsCmd = new MySqlCommand($"SELECT `ID`, `OWNER`, `TYPE`, `PLATFORM`, `SERIAL`, `DESCRIPTION`, `LastCheckIn`, `LastCheckOut`, `LogisticState`, `LogisticStateUpdated`, true AS \'BOUND\' FROM `ITEMS` WHERE LOGISTICSTATE IN {stringBuilder.ToString()} ORDER BY `ID`, `Type`, `Platform`;", Form1.MasterConnection);
+            SelectItemsCmd.Parameters.AddWithValue("@logisticFilter", checkedListBox1.Items[checkedListBox1.SelectedIndex]);
+            MySqlDataReader ItemsReader = SelectItemsCmd.ExecuteReader();
+            while (ItemsReader.Read())
+            {
+                itemResultBindingSource.Add(new ItemResult(ItemsReader.GetString("Owner"), ItemsReader.GetDecimal("ID"), ItemsReader.GetString("Type"), ItemsReader.GetString("Platform"), ItemsReader.GetString("Serial"), ItemsReader.GetString("Description"), ItemsReader.GetString("LastCheckIn"), ItemsReader.GetString("LastCheckOut"), ItemsReader.GetString("LogisticState"), ItemsReader.GetMySqlDateTime("LogisticStateUpdated").ToString()));
+            }
+            ItemsReader.Close();
+            dataGridView1.DefaultCellStyle.BackColor = Color.LightGreen;
         }
     }
 }
