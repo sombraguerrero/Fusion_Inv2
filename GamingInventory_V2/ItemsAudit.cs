@@ -94,17 +94,19 @@ namespace GamingInventory_V2
 
         private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
+            MySqlCommand SelectItemsCmd = new MySqlCommand("SELECT `ID`, `OWNER`, `TYPE`, `PLATFORM`, `SERIAL`, `DESCRIPTION`, `LastCheckIn`, `LastCheckOut`, `LogisticState`, `LogisticStateUpdated`, true AS \'BOUND\' FROM `ITEMS` ORDER BY `ID`, `Type`, `Platform`;", Form1.MasterConnection);
             System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder("(");
             itemResultBindingSource.Clear();
-            foreach (string item in checkedListBox1.CheckedItems)
-            {
-                stringBuilder.Append($"'{item}',");
+            if (checkedListBox1.CheckedItems.Count > 0)
+            { 
+                foreach (string item in checkedListBox1.CheckedItems)
+                {
+                    stringBuilder.Append($"'{item}',");
+                }
+                stringBuilder.Remove(stringBuilder.Length - 1, 1);
+                stringBuilder.Append(')');
+                SelectItemsCmd.CommandText = $"SELECT `ID`, `OWNER`, `TYPE`, `PLATFORM`, `SERIAL`, `DESCRIPTION`, `LastCheckIn`, `LastCheckOut`, `LogisticState`, `LogisticStateUpdated`, true AS \'BOUND\' FROM `ITEMS` WHERE LOGISTICSTATE IN {stringBuilder.ToString()} ORDER BY `ID`, `Type`, `Platform`;";
             }
-            stringBuilder.Remove(stringBuilder.Length - 1, 1);
-            stringBuilder.Append(')');
-;            //MySqlCommand SelectItemsCmd = new MySqlCommand("SELECT `ID`, `OWNER`, `TYPE`, `PLATFORM`, `SERIAL`, `DESCRIPTION`, (`LASTCHECKIN` > `LASTCHECKOUT`) AS \'BOUND\' FROM `ITEMS` ORDER BY `ID`;", Form1.MasterConnection);
-            MySqlCommand SelectItemsCmd = new MySqlCommand($"SELECT `ID`, `OWNER`, `TYPE`, `PLATFORM`, `SERIAL`, `DESCRIPTION`, `LastCheckIn`, `LastCheckOut`, `LogisticState`, `LogisticStateUpdated`, true AS \'BOUND\' FROM `ITEMS` WHERE LOGISTICSTATE IN {stringBuilder.ToString()} ORDER BY `ID`, `Type`, `Platform`;", Form1.MasterConnection);
-            SelectItemsCmd.Parameters.AddWithValue("@logisticFilter", checkedListBox1.Items[checkedListBox1.SelectedIndex]);
             MySqlDataReader ItemsReader = SelectItemsCmd.ExecuteReader();
             while (ItemsReader.Read())
             {
