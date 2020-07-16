@@ -186,6 +186,7 @@
     <EmbeddedResource Include="UpdateOwner.resx">
       <DependentUpon>UpdateOwner.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="Inventory_inst.nsi" />
     <None Include="Properties\DataSources\ItemResult.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -233,7 +234,7 @@
       <Version>15.0.4795.1000</Version>
     </PackageReference>
     <PackageReference Include="MySql.Data">
-      <Version>8.0.18</Version>
+      <Version>8.0.21</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
